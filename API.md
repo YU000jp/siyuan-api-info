@@ -843,136 +843,332 @@ const organizeDocuments = async (token) => {
 - Cross-notebook document migration
 - Automated content categorization
 
+### Path Utilities
+
+SiYuan provides several utility functions to convert between different path representations and locate documents by various identifiers.
+
 ### Get human-readable path based on path
 
-* `/api/filetree/getHPathByPath`
-* Parameters
+Converts a storage path to a human-readable path format.
 
-  ```json
-  {
-    "notebook": "20210831090520-7dvbdv0",
-    "path": "/20210917220500-sz588nq/20210917220056-yxtyl7i.sy"
-  }
-  ```
+**Endpoint:** `/api/filetree/getHPathByPath`
 
-    * `notebook`: Notebook ID
-    * `path`: Document path
-* Return value
+**Parameters:**
+```json
+{
+  "notebook": "20210831090520-7dvbdv0",
+  "path": "/20210917220500-sz588nq/20210917220056-yxtyl7i.sy"
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": "/foo/bar"
-  }
-  ```
+- `notebook` (string): Notebook ID
+- `path` (string): Document storage path
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": "/foo/bar"
+}
+```
+
+- `data` (string): Human-readable path
+
+**Use Cases:**
+- Creating user-friendly navigation interfaces
+- Generating breadcrumb navigation
+- Document linking with readable paths
 
 ### Get human-readable path based on ID
 
-* `/api/filetree/getHPathByID`
-* Parameters
+Retrieves the human-readable path for a document using its block ID.
 
-  ```json
-  {
-    "id": "20210917220056-yxtyl7i"
-  }
-  ```
+**Endpoint:** `/api/filetree/getHPathByID`
 
-    * `id`: Block ID
-* Return value
+**Parameters:**
+```json
+{
+  "id": "20210917220056-yxtyl7i"
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": "/foo/bar"
-  }
-  ```
+- `id` (string): Block ID of the document
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": "/foo/bar"
+}
+```
+
+**Example:**
+```javascript
+const getDocumentPath = async (blockId, token) => {
+  const response = await fetch('http://127.0.0.1:6806/api/filetree/getHPathByID', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    },
+    body: JSON.stringify({ id: blockId })
+  });
+  
+  const result = await response.json();
+  return result.data; // Returns the human-readable path
+};
+```
+
+**Use Cases:**
+- Building navigation systems
+- Creating document references
+- Implementing search result displays
 
 ### Get storage path based on ID
 
-* `/api/filetree/getPathByID`
-* Parameters
+Retrieves the actual storage path and notebook ID for a document based on its block ID.
 
-  ```json
-  {
-    "id": "20210808180320-fqgskfj"
-  }
-  ```
+**Endpoint:** `/api/filetree/getPathByID`
 
-    * `id`: Block ID
-* Return value
+**Parameters:**
+```json
+{
+  "id": "20210808180320-fqgskfj"
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": {
+- `id` (string): Block ID of the document
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
     "notebook": "20210808180117-czj9bvb",
     "path": "/20200812220555-lj3enxa/20210808180320-fqgskfj.sy"
-    }
   }
-  ```
+}
+```
+
+- `notebook` (string): Notebook ID containing the document
+- `path` (string): Storage path within the notebook
+
+**Use Cases:**
+- File system operations
+- Backup and synchronization tools
+- Low-level document management
 
 ### Get IDs based on human-readable path
 
-* `/api/filetree/getIDsByHPath`
-* Parameters
+Retrieves all document IDs that match a given human-readable path.
 
-  ```json
-  {
-    "path": "/foo/bar",
-    "notebook": "20210808180117-czj9bvb"
-  }
-  ```
+**Endpoint:** `/api/filetree/getIDsByHPath`
 
-    * `path`: Human-readable path
-    * `notebook`: Notebook ID
-* Return value
+**Parameters:**
+```json
+{
+  "path": "/foo/bar",
+  "notebook": "20210808180117-czj9bvb"
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": [
-        "20200813004931-q4cu8na"
-    ]
-  }
-  ```
+- `path` (string): Human-readable path to search for
+- `notebook` (string): Notebook ID to search within
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    "20200813004931-q4cu8na"
+  ]
+}
+```
+
+- `data` (array): Array of document IDs matching the path
+
+**Example - Finding documents by path:**
+```python
+def find_documents_by_path(notebook_id, search_path, token):
+    """Find all documents matching a human-readable path"""
+    import requests
+    
+    url = "http://127.0.0.1:6806/api/filetree/getIDsByHPath"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Token {token}"
+    }
+    
+    payload = {
+        "notebook": notebook_id,
+        "path": search_path
+    }
+    
+    response = requests.post(url, json=payload, headers=headers)
+    result = response.json()
+    
+    if result["code"] == 0:
+        return result["data"]  # List of document IDs
+    else:
+        print(f"Error: {result['msg']}")
+        return []
+
+# Usage
+doc_ids = find_documents_by_path(
+    "20210808180117-czj9bvb", 
+    "/projects/api-documentation", 
+    "your_token"
+)
+print(f"Found {len(doc_ids)} documents")
+```
+
+**Use Cases:**
+- Implementing search functionality
+- Building navigation systems
+- Document relationship mapping
+
+---
 
 ## Assets
 
+Assets in SiYuan include images, documents, videos, and other media files that enrich your notes. The Assets API allows you to upload and manage these files programmatically.
+
 ### Upload assets
 
-* `/api/asset/upload`
-* The parameter is an HTTP Multipart form
+Uploads one or more files to the SiYuan assets directory. Files are automatically renamed with unique identifiers to prevent conflicts.
 
-    * `assetsDirPath`: The folder path where assets are stored, with the data folder as the root path, for example:
-        * `"/assets/"`: workspace/data/assets/ folder
-        * `"/assets/sub/"`: workspace/data/assets/sub/ folder
+**Endpoint:** `/api/asset/upload`
 
-      Under normal circumstances, it is recommended to use the first method, which is stored in the assets folder of the
-      workspace, putting in a subdirectory has some side effects, please refer to the assets chapter of the user guide.
-    * `file[]`: Uploaded file list
-* Return value
+**Method:** HTTP POST with multipart/form-data
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": {
-      "errFiles": [""],
-      "succMap": {
-        "foo.png": "assets/foo-20210719092549-9j5y79r.png"
-      }
+**Parameters:**
+- `assetsDirPath` (string): Target directory path relative to the data folder
+  - `"/assets/"`: workspace/data/assets/ folder (recommended)
+  - `"/assets/sub/"`: workspace/data/assets/sub/ folder
+- `file[]` (file array): One or more files to upload
+
+**Directory Path Examples:**
+- `"/assets/"` → stores in `workspace/data/assets/` folder
+- `"/assets/images/"` → stores in `workspace/data/assets/images/` folder  
+- `"/assets/documents/"` → stores in `workspace/data/assets/documents/` folder
+
+**⚠️ Important:** It's recommended to use the main assets folder (`"/assets/"`) as subdirectories can have side effects. Refer to the assets chapter in the user guide for details.
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "errFiles": [""],
+    "succMap": {
+      "foo.png": "assets/foo-20210719092549-9j5y79r.png",
+      "document.pdf": "assets/document-20210719092550-abc123d.pdf"
     }
   }
-  ```
+}
+```
 
-    * `errFiles`: List of filenames with errors in upload processing
-    * `succMap`: For successfully processed files, the key is the file name when uploading, and the value is
-      assets/foo-id.png, which is used to replace the asset link address in the existing Markdown content with the
-      uploaded address
+**Response Fields:**
+- `errFiles` (array): List of filenames that failed to upload
+- `succMap` (object): Successfully uploaded files mapping
+  - Key: Original filename
+  - Value: New asset path with unique identifier
+
+**Example - Upload multiple files:**
+```javascript
+const uploadAssets = async (files, token) => {
+  const formData = new FormData();
+  
+  // Add directory path
+  formData.append('assetsDirPath', '/assets/');
+  
+  // Add files
+  files.forEach(file => {
+    formData.append('file[]', file);
+  });
+  
+  const response = await fetch('http://127.0.0.1:6806/api/asset/upload', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Token ${token}`
+      // Don't set Content-Type for multipart/form-data - browser will set it
+    },
+    body: formData
+  });
+  
+  return response.json();
+};
+
+// Usage with file input
+document.getElementById('fileInput').addEventListener('change', async (event) => {
+  const files = Array.from(event.target.files);
+  const result = await uploadAssets(files, 'your_token_here');
+  
+  console.log('Upload results:', result.data.succMap);
+  console.log('Failed uploads:', result.data.errFiles);
+});
+```
+
+**Example - Upload using curl:**
+```bash
+curl -X POST http://127.0.0.1:6806/api/asset/upload \
+  -H "Authorization: Token your_token_here" \
+  -F "assetsDirPath=/assets/" \
+  -F "file[]=@/path/to/image.png" \
+  -F "file[]=@/path/to/document.pdf"
+```
+
+**Example - Python upload:**
+```python
+import requests
+
+def upload_assets(file_paths, token, assets_dir="/assets/"):
+    """Upload multiple files to SiYuan assets"""
+    
+    url = "http://127.0.0.1:6806/api/asset/upload"
+    headers = {"Authorization": f"Token {token}"}
+    
+    files = []
+    data = {"assetsDirPath": assets_dir}
+    
+    # Prepare files for upload
+    for file_path in file_paths:
+        with open(file_path, 'rb') as f:
+            files.append(('file[]', (f.name, f.read())))
+    
+    response = requests.post(url, headers=headers, data=data, files=files)
+    return response.json()
+
+# Usage
+result = upload_assets([
+    "/home/user/screenshot.png",
+    "/home/user/report.pdf"
+], "your_token_here")
+
+for original, new_path in result['data']['succMap'].items():
+    print(f"Uploaded {original} → {new_path}")
+```
+
+**Use Cases:**
+- Batch media file uploads
+- Document management systems
+- Content migration tools
+- Automated screenshot integration
+- Building rich multimedia notes
+
+**Asset Link Integration:**
+After uploading, use the returned paths in your Markdown content:
+```markdown
+![Description](assets/foo-20210719092549-9j5y79r.png)
+[Download PDF](assets/document-20210719092550-abc123d.pdf)
+```
+
+---
 
 ## Blocks
 
