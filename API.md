@@ -1833,43 +1833,254 @@ Moves a block to a new position within the document structure.
 
 ## SQL
 
+SiYuan uses SQLite as its underlying database, storing all content in a structured format. The SQL API provides powerful querying capabilities to search, analyze, and extract data from your knowledge base.
+
+### Database Schema Overview
+
+SiYuan's main tables include:
+- **`blocks`**: Core content blocks (paragraphs, headings, lists, etc.)
+- **`refs`**: Block references and relationships
+- **`attributes`**: Block attributes and metadata
+- **`spans`**: Text spans and formatting information
+
 ### Execute SQL query
 
-* `/api/query/sql`
-* Parameters
+Executes a SQL query against the SiYuan database and returns matching results.
 
-  ```json
-  {
-    "stmt": "SELECT * FROM blocks WHERE content LIKE'%content%' LIMIT 7"
-  }
-  ```
+**Endpoint:** `/api/query/sql`
 
-    * `stmt`: SQL statement
-* Return value
+**Parameters:**
+```json
+{
+  "stmt": "SELECT * FROM blocks WHERE content LIKE '%content%' LIMIT 7"
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": [
-      { "col": "val" }
-    ]
-  }
-  ```
+- `stmt` (string): SQL statement to execute
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "id": "20210817205410-2kvfpfn",
+      "parent_id": "20210808180117-czj9bvb",
+      "root_id": "20210808180117-czj9bvb",
+      "hash": "abc123",
+      "box": "20210808180117-czj9bvb",
+      "path": "/20210808180320-fqgskfj.sy",
+      "hpath": "/User Guide/Content Block/Paragraph",
+      "name": "Paragraph",
+      "alias": "",
+      "memo": "",
+      "tag": "",
+      "content": "This is sample content with **formatting**",
+      "fcontent": "This is sample content with formatting",
+      "markdown": "This is sample content with **formatting**",
+      "length": 42,
+      "type": "p",
+      "subtype": "",
+      "ial": "{: id=\"20210817205410-2kvfpfn\"}",
+      "sort": 0,
+      "created": "20210817205410",
+      "updated": "20210817205410"
+    }
+  ]
+}
+```
+
+**Common Query Examples:**
+
+**1. Search for content containing specific text:**
+```sql
+SELECT id, content, hpath 
+FROM blocks 
+WHERE content LIKE '%API%' 
+AND type = 'p' 
+ORDER BY updated DESC 
+LIMIT 10
+```
+
+**2. Find all headings in a specific notebook:**
+```sql
+SELECT id, content, hpath 
+FROM blocks 
+WHERE box = '20210808180117-czj9bvb' 
+AND type = 'h' 
+ORDER BY sort ASC
+```
+
+**3. Get recently modified blocks:**
+```sql
+SELECT id, content, updated, hpath 
+FROM blocks 
+WHERE updated > '20240101000000' 
+ORDER BY updated DESC 
+LIMIT 20
+```
+
+**4. Find blocks with specific attributes:**
+```sql
+SELECT b.id, b.content, b.hpath 
+FROM blocks b 
+JOIN attributes a ON b.id = a.id 
+WHERE a.name = 'custom-status' 
+AND a.value = 'completed'
+```
+
+**JavaScript Example:**
+```javascript
+const queryBlocks = async (sqlQuery, token) => {
+  const response = await fetch('http://127.0.0.1:6806/api/query/sql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    },
+    body: JSON.stringify({
+      stmt: sqlQuery
+    })
+  });
+  
+  const result = await response.json();
+  return result.data;
+};
+
+// Usage examples
+const searchResults = await queryBlocks(`
+  SELECT id, content, hpath, type 
+  FROM blocks 
+  WHERE content LIKE '%SiYuan API%' 
+  ORDER BY updated DESC 
+  LIMIT 5
+`, 'your_token');
+
+console.log('Found blocks:', searchResults);
+
+// Find all todo items
+const todoItems = await queryBlocks(`
+  SELECT id, content, hpath 
+  FROM blocks 
+  WHERE markdown LIKE '%- [ ]%' 
+  OR markdown LIKE '%- [x]%'
+`, 'your_token');
+```
+
+**Python Example with Pandas:**
+```python
+import requests
+import pandas as pd
+
+def query_siyuan_data(sql_query, token):
+    """Execute SQL query and return results as pandas DataFrame"""
+    url = "http://127.0.0.1:6806/api/query/sql"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Token {token}"
+    }
+    
+    payload = {"stmt": sql_query}
+    response = requests.post(url, json=payload, headers=headers)
+    result = response.json()
+    
+    if result["code"] == 0:
+        return pd.DataFrame(result["data"])
+    else:
+        print(f"Query failed: {result['msg']}")
+        return pd.DataFrame()
+
+# Usage - Analyze content statistics
+content_stats = query_siyuan_data("""
+    SELECT 
+        type,
+        COUNT(*) as count,
+        AVG(length) as avg_length,
+        MIN(created) as first_created,
+        MAX(updated) as last_updated
+    FROM blocks 
+    GROUP BY type 
+    ORDER BY count DESC
+""", "your_token")
+
+print("Content Statistics:")
+print(content_stats)
+
+# Find blocks by date range
+recent_blocks = query_siyuan_data("""
+    SELECT id, content, hpath, type, updated
+    FROM blocks 
+    WHERE updated >= '20240101000000' 
+    AND type IN ('p', 'h') 
+    ORDER BY updated DESC
+""", "your_token")
+```
+
+**Block Types Reference:**
+- `p`: Paragraph
+- `h`: Heading
+- `l`: List
+- `i`: List item
+- `c`: Code block
+- `m`: Math block
+- `t`: Table
+- `b`: Blockquote
+- `s`: Super block
+- `d`: Document
+
+**Use Cases:**
+- Content analysis and statistics
+- Advanced search functionality
+- Data export and reporting
+- Content migration tools
+- Building custom dashboards
+- Automated content auditing
 
 ### Flush transaction
 
-* `/api/sqlite/flushTransaction`
-* No parameters
-* Return value
+Forces the database to commit any pending transactions, ensuring data consistency.
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": null
-  }
-  ```
+**Endpoint:** `/api/sqlite/flushTransaction`
+
+**Parameters:** None
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+**Example:**
+```javascript
+const flushDatabase = async (token) => {
+  const response = await fetch('http://127.0.0.1:6806/api/sqlite/flushTransaction', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    },
+    body: JSON.stringify({})
+  });
+  
+  return response.json();
+};
+
+// Usage - ensure data consistency before backup
+await flushDatabase('your_token');
+console.log('Database transactions flushed successfully');
+```
+
+**Use Cases:**
+- Ensuring data consistency before backups
+- Synchronization checkpoints
+- Performance optimization
+- Database maintenance operations
+
+---
 
 ## Templates
 
