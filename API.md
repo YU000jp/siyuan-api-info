@@ -1,4 +1,25 @@
-[中文](https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md)
+# SiYuan API Documentation
+
+A comprehensive guide to the SiYuan Note-Taking Application API. This API allows you to programmatically interact with SiYuan to manage notebooks, documents, blocks, and perform various operations.
+
+**Language Options:**
+- [中文 (Chinese)](https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md)
+- [日本語 (Japanese)](API_ja_JP.md)
+
+---
+
+## Overview
+
+The SiYuan API provides a RESTful interface for interacting with your knowledge base. You can use it to:
+
+- **Manage Notebooks**: Create, open, close, rename, and delete notebooks
+- **Handle Documents**: Create documents from Markdown, organize file structure
+- **Manipulate Blocks**: Insert, update, move, and delete content blocks
+- **Query Data**: Execute SQL queries against your knowledge base
+- **Upload Assets**: Manage images and other media files
+- **Export Content**: Convert and export your notes in various formats
+
+## Table of Contents
 
 * [Specification](#Specification)
     * [Parameters and return values](#Parameters-and-return-values)
@@ -67,429 +88,760 @@
 
 ---
 
-## Specification
+## API Specification
 
-### Parameters and return values
+### Endpoint Configuration
 
-* Endpoint: `http://127.0.0.1:6806`
-* Both are POST methods
-* An interface with parameters is required, the parameter is a JSON string, placed in the body, and the header
-  Content-Type is `application/json`
-* Return value
+The SiYuan API operates on a local HTTP server:
 
-   ````json
-   {
-     "code": 0,
-     "msg": "",
-     "data": {}
-   }
-   ````
+- **Base URL**: `http://127.0.0.1:6806`
+- **Protocol**: HTTP POST only
+- **Content-Type**: `application/json`
+- **Port**: 6806 (default, configurable in settings)
 
-    * `code`: non-zero for exceptions
-    * `msg`: an empty string under normal circumstances, an error text will be returned under abnormal conditions
-    * `data`: may be `{}`, `[]` or `NULL`, depending on the interface
+### Request Format
+
+All API requests must be sent as HTTP POST with JSON payload in the request body:
+
+```bash
+curl -X POST \
+  http://127.0.0.1:6806/api/notebook/lsNotebooks \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Token your_api_token_here" \
+  -d '{}'
+```
+
+### Response Format
+
+All API responses follow a consistent structure:
+
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {}
+}
+```
+
+**Response Fields:**
+- **`code`** (integer): Status code
+  - `0`: Success
+  - Non-zero: Error occurred
+- **`msg`** (string): Message
+  - Empty string on success
+  - Error description on failure
+- **`data`** (object/array/null): Response payload
+  - Varies by endpoint: `{}`, `[]`, or `null`
 
 ### Authentication
 
-View API token in <kbd>Settings - About</kbd>, request header: `Authorization: Token xxx`
+**How to get your API token:**
+1. Open SiYuan application
+2. Go to <kbd>Settings</kbd> → <kbd>About</kbd>
+3. Copy the API token
+
+**Using the token:**
+Add the authorization header to all requests:
+```
+Authorization: Token your_api_token_here
+```
+
+**Example with authentication:**
+```javascript
+const response = await fetch('http://127.0.0.1:6806/api/notebook/lsNotebooks', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Token your_api_token_here'
+  },
+  body: JSON.stringify({})
+});
+```
+
+### Error Handling
+
+When an error occurs, the response will include:
+- `code`: Non-zero error code
+- `msg`: Descriptive error message
+- `data`: Usually `null` or empty
+
+Example error response:
+```json
+{
+  "code": -1,
+  "msg": "Notebook not found",
+  "data": null
+}
+```
 
 ## Notebooks
 
+Notebooks are the top-level containers for organizing your documents in SiYuan. Each notebook can contain multiple documents and subdirectories, providing a hierarchical structure for your knowledge base.
+
 ### List notebooks
 
-* `/api/notebook/lsNotebooks`
-* No parameters
-* Return value
+Retrieves all available notebooks in your workspace, including their current status (open/closed).
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": {
-      "notebooks": [
-        {
-          "id": "20210817205410-2kvfpfn", 
-          "name": "Test Notebook",
-          "icon": "1f41b",
-          "sort": 0,
-          "closed": false
-        },
-        {
-          "id": "20210808180117-czj9bvb",
-          "name": "SiYuan User Guide",
-          "icon": "1f4d4",
-          "sort": 1,
-          "closed": false
-        }
-      ]
-    }
+**Endpoint:** `/api/notebook/lsNotebooks`
+
+**Parameters:** None
+
+**Example Request:**
+```bash
+curl -X POST http://127.0.0.1:6806/api/notebook/lsNotebooks \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Token your_token" \
+  -d '{}'
+```
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "notebooks": [
+      {
+        "id": "20210817205410-2kvfpfn", 
+        "name": "Test Notebook",
+        "icon": "1f41b",
+        "sort": 0,
+        "closed": false
+      },
+      {
+        "id": "20210808180117-czj9bvb",
+        "name": "SiYuan User Guide",
+        "icon": "1f4d4",
+        "sort": 1,
+        "closed": false
+      }
+    ]
   }
-  ```
+}
+```
+
+**Response Fields:**
+- `id`: Unique notebook identifier (timestamp-based)
+- `name`: User-defined notebook name
+- `icon`: Unicode emoji code for the notebook icon
+- `sort`: Display order index
+- `closed`: Whether the notebook is currently closed
+
+**Use Cases:**
+- Dashboard applications showing available notebooks
+- Backup scripts that need to process all notebooks
+- Workspace overview tools
 
 ### Open a notebook
 
-* `/api/notebook/openNotebook`
-* Parameters
+Opens a closed notebook, making its contents accessible for reading and editing.
 
-  ```json
-  {
-    "notebook": "20210831090520-7dvbdv0"
-  }
-  ```
+**Endpoint:** `/api/notebook/openNotebook`
 
-    * `notebook`: Notebook ID
-* Return value
+**Parameters:**
+```json
+{
+  "notebook": "20210831090520-7dvbdv0"
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": null
-  }
-  ```
+- `notebook` (string): The unique ID of the notebook to open
+
+**Example:**
+```javascript
+const openNotebook = async (notebookId) => {
+  const response = await fetch('http://127.0.0.1:6806/api/notebook/openNotebook', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Token your_token'
+    },
+    body: JSON.stringify({
+      notebook: notebookId
+    })
+  });
+  return response.json();
+};
+```
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+**Use Cases:**
+- Automatic workspace restoration
+- Context-sensitive notebook activation
+- Batch operations requiring specific notebooks to be open
 
 ### Close a notebook
 
-* `/api/notebook/closeNotebook`
-* Parameters
+Closes an open notebook, freeing up resources while preserving the notebook's data.
 
-  ```json
-  {
-    "notebook": "20210831090520-7dvbdv0"
-  }
-  ```
+**Endpoint:** `/api/notebook/closeNotebook`
 
-    * `notebook`: Notebook ID
-* Return value
+**Parameters:**
+```json
+{
+  "notebook": "20210831090520-7dvbdv0"
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": null
-  }
-  ```
+- `notebook` (string): The unique ID of the notebook to close
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+**Use Cases:**
+- Memory optimization for large workspaces
+- Project-based workflow management
+- Automated cleanup processes
 
 ### Rename a notebook
 
-* `/api/notebook/renameNotebook`
-* Parameters
+Changes the display name of an existing notebook.
 
-  ```json
-  {
-    "notebook": "20210831090520-7dvbdv0",
-    "name": "New name for notebook"
-  }
-  ```
+**Endpoint:** `/api/notebook/renameNotebook`
 
-    * `notebook`: Notebook ID
-* Return value
+**Parameters:**
+```json
+{
+  "notebook": "20210831090520-7dvbdv0",
+  "name": "New name for notebook"
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": null
-  }
-  ```
+- `notebook` (string): Notebook ID
+- `name` (string): New name for the notebook
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+**Use Cases:**
+- Workspace reorganization
+- Project rebranding
+- Batch renaming operations
 
 ### Create a notebook
 
-* `/api/notebook/createNotebook`
-* Parameters
+Creates a new empty notebook in your workspace.
 
-  ```json
-  {
-    "name": "Notebook name"
-  }
-  ```
-* Return value
+**Endpoint:** `/api/notebook/createNotebook`
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": {
-      "notebook": {
-        "id": "20220126215949-r1wvoch",
-        "name": "Notebook name",
-        "icon": "",
-        "sort": 0,
-        "closed": false
-      }
+**Parameters:**
+```json
+{
+  "name": "Notebook name"
+}
+```
+
+- `name` (string): Name for the new notebook
+
+**Example:**
+```python
+import requests
+
+def create_notebook(name, token):
+    url = "http://127.0.0.1:6806/api/notebook/createNotebook"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Token {token}"
+    }
+    payload = {"name": name}
+    
+    response = requests.post(url, json=payload, headers=headers)
+    return response.json()
+
+# Usage
+result = create_notebook("My New Project", "your_token_here")
+print(f"Created notebook with ID: {result['data']['notebook']['id']}")
+```
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "notebook": {
+      "id": "20220126215949-r1wvoch",
+      "name": "Notebook name",
+      "icon": "",
+      "sort": 0,
+      "closed": false
     }
   }
-  ```
+}
+```
+
+**Use Cases:**
+- Project initialization scripts
+- Template-based notebook creation
+- Automated workspace setup
 
 ### Remove a notebook
 
-* `/api/notebook/removeNotebook`
-* Parameters
+Permanently deletes a notebook and all its contents. ⚠️ **This operation cannot be undone.**
 
-  ```json
-  {
-    "notebook": "20210831090520-7dvbdv0"
-  }
-  ```
+**Endpoint:** `/api/notebook/removeNotebook`
 
-    * `notebook`: Notebook ID
-* Return value
+**Parameters:**
+```json
+{
+  "notebook": "20210831090520-7dvbdv0"
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": null
-  }
-  ```
+- `notebook` (string): ID of the notebook to delete
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+**⚠️ Warning:** This operation permanently deletes all data in the notebook. Always backup important data before deletion.
+
+**Use Cases:**
+- Cleanup scripts for temporary notebooks
+- Project archival workflows
+- Workspace maintenance
 
 ### Get notebook configuration
 
-* `/api/notebook/getNotebookConf`
-* Parameters
+Retrieves the configuration settings for a specific notebook.
 
-  ```json
-  {
-    "notebook": "20210817205410-2kvfpfn"
-  }
-  ```
+**Endpoint:** `/api/notebook/getNotebookConf`
 
-    * `notebook`: Notebook ID
-* Return value
+**Parameters:**
+```json
+{
+  "notebook": "20210817205410-2kvfpfn"
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": {
-      "box": "20210817205410-2kvfpfn",
-      "conf": {
-        "name": "Test Notebook",
-        "closed": false,
-        "refCreateSavePath": "",
-        "createDocNameTemplate": "",
-        "dailyNoteSavePath": "/daily note/{{now | date \"2006/01\"}}/{{now | date \"2006-01-02\"}}",
-        "dailyNoteTemplatePath": ""
-      },
-      "name": "Test Notebook"
-    }
-  }
-  ```
+- `notebook` (string): Notebook ID
 
-### Save notebook configuration
-
-* `/api/notebook/setNotebookConf`
-* Parameters
-
-  ```json
-  {
-    "notebook": "20210817205410-2kvfpfn",
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "box": "20210817205410-2kvfpfn",
     "conf": {
-        "name": "Test Notebook",
-        "closed": false,
-        "refCreateSavePath": "",
-        "createDocNameTemplate": "",
-        "dailyNoteSavePath": "/daily note/{{now | date \"2006/01\"}}/{{now | date \"2006-01-02\"}}",
-        "dailyNoteTemplatePath": ""
-      }
-  }
-  ```
-
-    * `notebook`: Notebook ID
-* Return value
-
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": {
       "name": "Test Notebook",
       "closed": false,
       "refCreateSavePath": "",
       "createDocNameTemplate": "",
       "dailyNoteSavePath": "/daily note/{{now | date \"2006/01\"}}/{{now | date \"2006-01-02\"}}",
       "dailyNoteTemplatePath": ""
-    }
+    },
+    "name": "Test Notebook"
   }
-  ```
+}
+```
+
+**Configuration Fields:**
+- `name`: Notebook display name
+- `closed`: Whether the notebook is closed
+- `refCreateSavePath`: Default path for creating reference documents
+- `createDocNameTemplate`: Template for new document names
+- `dailyNoteSavePath`: Path template for daily notes (supports date formatting)
+- `dailyNoteTemplatePath`: Path to template used for daily notes
+
+**Use Cases:**
+- Backup and restore notebook settings
+- Synchronizing configuration across instances
+- Building configuration management tools
+
+### Save notebook configuration
+
+Updates the configuration settings for a specific notebook.
+
+**Endpoint:** `/api/notebook/setNotebookConf`
+
+**Parameters:**
+```json
+{
+  "notebook": "20210817205410-2kvfpfn",
+  "conf": {
+    "name": "Test Notebook",
+    "closed": false,
+    "refCreateSavePath": "",
+    "createDocNameTemplate": "",
+    "dailyNoteSavePath": "/daily note/{{now | date \"2006/01\"}}/{{now | date \"2006-01-02\"}}",
+    "dailyNoteTemplatePath": ""
+  }
+}
+```
+
+- `notebook` (string): Notebook ID
+- `conf` (object): Configuration object with settings to update
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "name": "Test Notebook",
+    "closed": false,
+    "refCreateSavePath": "",
+    "createDocNameTemplate": "",
+    "dailyNoteSavePath": "/daily note/{{now | date \"2006/01\"}}/{{now | date \"2006-01-02\"}}",
+    "dailyNoteTemplatePath": ""
+  }
+}
+```
+
+**Example - Setting up daily notes:**
+```javascript
+const setupDailyNotes = async (notebookId, token) => {
+  const conf = {
+    name: "My Daily Journal",
+    closed: false,
+    refCreateSavePath: "/references",
+    createDocNameTemplate: "{{now | date \"2006-01-02\"}} - {{.title}}",
+    dailyNoteSavePath: "/daily/{{now | date \"2006/01\"}}/{{now | date \"2006-01-02\"}}",
+    dailyNoteTemplatePath: "/templates/daily-template"
+  };
+  
+  const response = await fetch('http://127.0.0.1:6806/api/notebook/setNotebookConf', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    },
+    body: JSON.stringify({
+      notebook: notebookId,
+      conf: conf
+    })
+  });
+  
+  return response.json();
+};
+```
+
+**Use Cases:**
+- Automated workspace setup
+- Template-based notebook configuration
+- Bulk configuration updates
+
+---
 
 ## Documents
 
+Documents are individual notes or files within notebooks. They can contain various types of content including text, images, tables, and complex block structures. The Documents API allows you to create, manage, and organize your knowledge base content.
+
 ### Create a document with Markdown
 
-* `/api/filetree/createDocWithMd`
-* Parameters
+Creates a new document from Markdown content. This is useful for importing existing notes or creating documents programmatically.
 
-  ```json
-  {
-    "notebook": "20210817205410-2kvfpfn",
-    "path": "/foo/bar",
-    "markdown": ""
-  }
-  ```
+**Endpoint:** `/api/filetree/createDocWithMd`
 
-    * `notebook`: Notebook ID
-    * `path`: Document path, which needs to start with / and separate levels with / (path here corresponds to the
-      database hpath field)
-    * `markdown`: GFM Markdown content
-* Return value
+**Parameters:**
+```json
+{
+  "notebook": "20210817205410-2kvfpfn",
+  "path": "/foo/bar",
+  "markdown": "# Hello World\n\nThis is my first document."
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": "20210914223645-oj2vnx2"
-  }
-  ```
+- `notebook` (string): Target notebook ID
+- `path` (string): Document path within the notebook, must start with `/` and separate levels with `/` (corresponds to database `hpath` field)
+- `markdown` (string): GFM (GitHub Flavored Markdown) content for the document
 
-    * `data`: Created document ID
-    * If you use the same `path` to call this interface repeatedly, the existing document will not be overwritten
+**Example:**
+```python
+def create_markdown_document(notebook_id, path, content, token):
+    """Create a new document from markdown content"""
+    import requests
+    
+    url = "http://127.0.0.1:6806/api/filetree/createDocWithMd"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Token {token}"
+    }
+    
+    payload = {
+        "notebook": notebook_id,
+        "path": path,
+        "markdown": content
+    }
+    
+    response = requests.post(url, json=payload, headers=headers)
+    return response.json()
+
+# Usage example
+markdown_content = """# Project Overview
+
+## Goals
+- Complete the API documentation
+- Add Japanese translation
+- Improve user experience
+
+## Timeline
+- Week 1: Documentation enhancement
+- Week 2: Translation work
+- Week 3: Review and testing
+"""
+
+result = create_markdown_document(
+    "20210817205410-2kvfpfn", 
+    "/projects/api-documentation", 
+    markdown_content,
+    "your_token_here"
+)
+```
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": "20210914223645-oj2vnx2"
+}
+```
+
+- `data`: ID of the created document
+
+**Important Notes:**
+- If you call this endpoint repeatedly with the same `path`, existing documents will not be overwritten
+- The path should not include the `.sy` file extension
+- Markdown content is converted to SiYuan's internal block structure
+
+**Use Cases:**
+- Importing content from other note-taking applications
+- Automated content generation
+- Template-based document creation
+- Batch document creation from external sources
 
 ### Rename a document
 
-* `/api/filetree/renameDoc`
-* Parameters
+Changes the title of an existing document. You can rename by document path or by document ID.
 
-  ```json
-  {
-    "notebook": "20210831090520-7dvbdv0",
-    "path": "/20210902210113-0avi12f.sy",
-    "title": "New document title"
-  }
-  ```
+**Method 1: Rename by path**
 
-    * `notebook`: Notebook ID
-    * `path`: Document path
-    * `title`: New document title
-* Return value
+**Endpoint:** `/api/filetree/renameDoc`
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": null
-  }
-  ```
+**Parameters:**
+```json
+{
+  "notebook": "20210831090520-7dvbdv0",
+  "path": "/20210902210113-0avi12f.sy",
+  "title": "New document title"
+}
+```
 
-Rename a document by `id`:
+- `notebook` (string): Notebook ID containing the document
+- `path` (string): Full document path including `.sy` extension
+- `title` (string): New title for the document
 
-* `/api/filetree/renameDocByID`
-* Parameters
+**Method 2: Rename by ID**
 
-  ```json
-  {
-    "id": "20210902210113-0avi12f",
-    "title": "New document title"
-  }
-  ```
+**Endpoint:** `/api/filetree/renameDocByID`
 
-    * `id`: Document ID
-    * `title`: New document title
-* Return value
+**Parameters:**
+```json
+{
+  "id": "20210902210113-0avi12f",
+  "title": "New document title"
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": null
-  }
-  ```
+- `id` (string): Document ID
+- `title` (string): New title for the document
+
+**Response (both methods):**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+**Example:**
+```javascript
+const renameDocument = async (documentId, newTitle, token) => {
+  const response = await fetch('http://127.0.0.1:6806/api/filetree/renameDocByID', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    },
+    body: JSON.stringify({
+      id: documentId,
+      title: newTitle
+    })
+  });
+  
+  return response.json();
+};
+
+// Usage
+await renameDocument("20210902210113-0avi12f", "My Updated Document Title", "your_token");
+```
+
+**Use Cases:**
+- Document organization and restructuring
+- Batch renaming operations
+- Content management workflows
+- Template-based naming conventions
 
 ### Remove a document
 
-* `/api/filetree/removeDoc`
-* Parameters
+Permanently deletes a document and all its content. ⚠️ **This operation cannot be undone.**
 
-  ```json
-  {
-    "notebook": "20210831090520-7dvbdv0",
-    "path": "/20210902210113-0avi12f.sy"
-  }
-  ```
+**Method 1: Remove by path**
 
-    * `notebook`: Notebook ID
-    * `path`: Document path
-* Return value
+**Endpoint:** `/api/filetree/removeDoc`
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": null
-  }
-  ```
+**Parameters:**
+```json
+{
+  "notebook": "20210831090520-7dvbdv0",
+  "path": "/20210902210113-0avi12f.sy"
+}
+```
 
-Remove a document by `id`:
+- `notebook` (string): Notebook ID containing the document
+- `path` (string): Full document path including `.sy` extension
 
-* `/api/filetree/removeDocByID`
-* Parameters
+**Method 2: Remove by ID**
 
-  ```json
-  {
-    "id": "20210902210113-0avi12f"
-  }
-  ```
+**Endpoint:** `/api/filetree/removeDocByID`
 
-    * `id`: Document ID
-* Return value
+**Parameters:**
+```json
+{
+  "id": "20210902210113-0avi12f"
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": null
-  }
-  ```
+- `id` (string): Document ID to remove
+
+**Response (both methods):**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+**⚠️ Warning:** This operation permanently deletes the document and all its content. Always backup important data before deletion.
+
+**Example:**
+```bash
+# Remove document by ID
+curl -X POST http://127.0.0.1:6806/api/filetree/removeDocByID \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Token your_token" \
+  -d '{"id": "20210902210113-0avi12f"}'
+```
+
+**Use Cases:**
+- Cleanup scripts for temporary documents
+- Content management workflows
+- Batch deletion operations
+- Document lifecycle management
 
 ### Move documents
 
-* `/api/filetree/moveDocs`
-* Parameters
+Moves documents between different locations within the same notebook or to different notebooks.
 
-  ```json
-  {
-    "fromPaths": ["/20210917220056-yxtyl7i.sy"],
-    "toNotebook": "20210817205410-2kvfpfn",
-    "toPath": "/"
-  }
-  ```
+**Method 1: Move by paths**
 
-    * `fromPaths`: Source paths
-    * `toNotebook`: Target notebook ID
-    * `toPath`: Target path
-* Return value
+**Endpoint:** `/api/filetree/moveDocs`
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": null
-  }
-  ```
+**Parameters:**
+```json
+{
+  "fromPaths": ["/20210917220056-yxtyl7i.sy"],
+  "toNotebook": "20210817205410-2kvfpfn",
+  "toPath": "/"
+}
+```
 
-Move documents by `id`:
+- `fromPaths` (array): Array of source document paths
+- `toNotebook` (string): Target notebook ID
+- `toPath` (string): Target path within the notebook
 
-* `/api/filetree/moveDocsByID`
-* Parameters
+**Method 2: Move by IDs**
 
-  ```json
-  {
-    "fromIDs": ["20210917220056-yxtyl7i"],
-    "toID": "20210817205410-2kvfpfn"
-  }
-  ```
+**Endpoint:** `/api/filetree/moveDocsByID`
 
-    * `fromIDs`: Source docs' IDs
-    * `toID`: Target parent doc's ID or notebook ID
-* Return value
+**Parameters:**
+```json
+{
+  "fromIDs": ["20210917220056-yxtyl7i"],
+  "toID": "20210817205410-2kvfpfn"
+}
+```
 
-  ```json
-  {
-    "code": 0,
-    "msg": "",
-    "data": null
-  }
-  ```
+- `fromIDs` (array): Array of source document IDs
+- `toID` (string): Target parent document ID or notebook ID
+
+**Response (both methods):**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+**Example - Organizing documents into folders:**
+```javascript
+const organizeDocuments = async (token) => {
+  // Move multiple documents to a project folder
+  const response = await fetch('http://127.0.0.1:6806/api/filetree/moveDocsByID', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    },
+    body: JSON.stringify({
+      fromIDs: [
+        "20210917220056-yxtyl7i",
+        "20210918110023-abc123f",
+        "20210919140055-def456g"
+      ],
+      toID: "20210920000000-project1"  // Parent folder ID
+    })
+  });
+  
+  return response.json();
+};
+```
+
+**Use Cases:**
+- Document organization and restructuring
+- Project-based content management
+- Cross-notebook document migration
+- Automated content categorization
 
 ### Get human-readable path based on path
 
