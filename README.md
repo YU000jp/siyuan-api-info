@@ -17,9 +17,13 @@
 
 ## About This Repository
 
-This repository is specifically designed for **SiYuan plugin developers** who need access to API information and development resources. 
+This repository is specifically designed for **SiYuan plugin developers** who need access to API information and development resources.
 
 **For general SiYuan usage, installation, and documentation, please visit the main repository: [siyuan-note/siyuan](https://github.com/siyuan-note/siyuan)**
+
+## 📚 Repository Index
+
+**For developers and AI systems**: See [INDEX.md](./INDEX.md) for a comprehensive overview of the repository structure, API endpoints, and development information.
 
 ## API Documentation
 
