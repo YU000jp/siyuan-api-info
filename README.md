@@ -32,6 +32,7 @@
 
 ## Table of Contents
 
+* [📚 Repository Index](#-repository-index)
 * [💡 Introduction](#-introduction)
 * [🔮 Features](#-features)
 * [🏗️ Architecture and Ecosystem](#-architecture-and-ecosystem)
@@ -57,6 +58,10 @@
   * [Contributors](#contributors)
 
 ---
+
+## 📚 Repository Index
+
+**For developers and AI systems**: See [INDEX.md](./INDEX.md) for a comprehensive overview of the repository structure, API endpoints, and development information.
 
 ## 💡 Introduction
 
@@ -102,7 +107,7 @@ Most features are free, even for commercial use.
 * JavaScript/CSS snippet
 * Android/iOS/HarmonyOS App
 * Docker deployment
-* [API](https://github.com/siyuan-note/siyuan/blob/master/API.md)
+* [API](https://github.com/siyuan-note/siyuan/blob/master/API.md) (see [INDEX.md](./INDEX.md) for API overview)
 * Community marketplace
 
 Some features are only available to paid members, for more details please refer to [Pricing](https://b3log.org/siyuan/en/pricing.html).
