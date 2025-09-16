@@ -81,10 +81,1404 @@ SiYuan APIは、知識ベースとやり取りするためのRESTfulインター
     * [エラーメッセージのプッシュ](#エラーメッセージのプッシュ)
 * [ネットワーク](#ネットワーク)
     * [フォワードプロキシ](#フォワードプロキシ)
+* [UI管理](#UI管理)
+    * [UIのリロード](#UIのリロード)
+    * [ファイルツリーのリロード](#ファイルツリーのリロード)
+    * [Protyleエディターのリロード](#Protyleエディターのリロード)
+    * [タグパネルのリロード](#タグパネルのリロード)
+    * [属性ビューのリロード](#属性ビューのリロード)
+* [ワークスペース管理](#ワークスペース管理)
+    * [ワークスペース一覧取得](#ワークスペース一覧取得)
+    * [ワークスペースディレクトリ作成](#ワークスペースディレクトリ作成)
+    * [ワークスペースディレクトリチェック](#ワークスペースディレクトリチェック)
+    * [ワークスペースディレクトリ削除](#ワークスペースディレクトリ削除)
+    * [ワークスペース情報取得](#ワークスペース情報取得)
+* [プラグイン・拡張機能管理](#プラグイン・拡張機能管理)
+    * [プラグインのロード](#プラグインのロード)
+    * [プラグインの有効化設定](#プラグインの有効化設定)
+    * [Bazaarプラグイン取得](#Bazaarプラグイン取得)
+    * [Bazaarプラグインインストール](#Bazaarプラグインインストール)
+    * [プラグインアンインストール](#プラグインアンインストール)
+    * [テーマ管理](#テーマ管理)
+    * [ウィジェット管理](#ウィジェット管理)
+    * [アイコン管理](#アイコン管理)
+    * [スニペット管理](#スニペット管理)
+* [属性ビュー（データベース）](#属性ビュー（データベース）)
+    * [属性ビュー取得](#属性ビュー取得)
+    * [属性ビューレンダリング](#属性ビューレンダリング)
+    * [属性ビューブロック追加](#属性ビューブロック追加)
+    * [属性ビューキー追加](#属性ビューキー追加)
+    * [属性ビューレイアウト変更](#属性ビューレイアウト変更)
+    * [属性ビュー検索](#属性ビュー検索)
+    * [属性ビューフィルター・ソート](#属性ビューフィルター・ソート)
+* [高度な検索・インデックス](#高度な検索・インデックス)
+    * [フルテキスト検索](#フルテキスト検索)
+    * [アセット検索](#アセット検索)
+    * [アセットコンテンツ検索](#アセットコンテンツ検索)
+    * [埋め込みブロック検索](#埋め込みブロック検索)
+    * [無効な参照検索](#無効な参照検索)
+    * [検索・置換](#検索・置換)
+* [同期・クラウド機能](#同期・クラウド機能)
+    * [同期実行](#同期実行)
+    * [同期情報取得](#同期情報取得)
+    * [同期設定](#同期設定)
+    * [クラウド同期ディレクトリ管理](#クラウド同期ディレクトリ管理)
+    * [S3同期プロバイダー](#S3同期プロバイダー)
+    * [WebDAV同期プロバイダー](#WebDAV同期プロバイダー)
+* [バージョン管理・履歴](#バージョン管理・履歴)
+    * [スナップショット作成](#スナップショット作成)
+    * [スナップショット一覧取得](#スナップショット一覧取得)
+    * [スナップショット比較](#スナップショット比較)
+    * [リポジトリチェックアウト](#リポジトリチェックアウト)
+    * [クラウドスナップショット](#クラウドスナップショット)
+* [間隔反復学習（フラッシュカード）](#間隔反復学習（フラッシュカード）)
+    * [フラッシュカードデッキ作成](#フラッシュカードデッキ作成)
+    * [フラッシュカード追加](#フラッシュカード追加)
+    * [フラッシュカード復習](#フラッシュカード復習)
+    * [復習予定カード取得](#復習予定カード取得)
+* [AI統合](#AI統合)
+    * [ChatGPT連携](#ChatGPT連携)
+    * [ChatGPTアクション付き連携](#ChatGPTアクション付き連携)
 * [システム](#システム)
     * [起動進行状況の取得](#起動進行状況の取得)
     * [システムバージョンの取得](#システムバージョンの取得)
     * [システム現在時刻の取得](#システム現在時刻の取得)
+    * [システム設定の取得](#システム設定の取得)
+    * [システム設定のエクスポート](#システム設定のエクスポート)
+    * [システム設定のインポート](#システム設定のインポート)
+    * [システムフォント取得](#システムフォント取得)
+    * [アップデートチェック](#アップデートチェック)
+    * [ネットワーク情報取得](#ネットワーク情報取得)
+    * [外観モード設定](#外観モード設定)
+    * [UIレイアウト設定](#UIレイアウト設定)
+    * [ネットワークサーブ設定](#ネットワークサーブ設定)
+    * [自動起動設定](#自動起動設定)
+    * [データインデックス再構築](#データインデックス再構築)
+    * [データインデックス最適化](#データインデックス最適化)
+    * [アプリケーション終了](#アプリケーション終了)
+* [アカウント・クラウド](#アカウント・クラウド)
+    * [アカウントログイン](#アカウントログイン)
+    * [アクティベーションコード確認](#アクティベーションコード確認)
+    * [アクティベーションコード使用](#アクティベーションコード使用)
+    * [アカウント無効化](#アカウント無効化)
+    * [無料トライアル開始](#無料トライアル開始)
+    * [クラウドスペース取得](#クラウドスペース取得)
+* [拡張ブロック操作](#拡張ブロック操作)
+    * [ブロック存在確認](#ブロック存在確認)
+    * [ブロック参照確認](#ブロック参照確認)
+    * [ブロック情報取得](#ブロック情報取得)
+    * [ブロックDOM取得](#ブロックDOM取得)
+    * [ブロックツリー情報取得](#ブロックツリー情報取得)
+    * [ヘディング子ブロック取得](#ヘディング子ブロック取得)
+    * [最近更新ブロック取得](#最近更新ブロック取得)
+    * [ブロック参照転送](#ブロック参照転送)
+    * [ブロック参照スワップ](#ブロック参照スワップ)
+    * [バッチブロック操作](#バッチブロック操作)
+* [高度なアセット管理](#高度なアセット管理)
+    * [アセット統計](#アセット統計)
+    * [アセットパス解決](#アセットパス解決)
+    * [アセット名変更](#アセット名変更)
+    * [未使用アセット取得](#未使用アセット取得)
+    * [未使用アセット削除](#未使用アセット削除)
+    * [不足アセット取得](#不足アセット取得)
+    * [OCR機能](#OCR機能)
+    * [ファイルアノテーション](#ファイルアノテーション)
+    * [アセットコンテンツ再インデックス](#アセットコンテンツ再インデックス)
+    * [クラウドアップロード](#クラウドアップロード)
+* [タグ・参照管理](#タグ・参照管理)
+    * [タグ取得](#タグ取得)
+    * [タグ削除](#タグ削除)
+    * [タグ名変更](#タグ名変更)
+    * [バックリンク取得](#バックリンク取得)
+    * [バックメンション取得](#バックメンション取得)
+    * [参照ID取得](#参照ID取得)
+    * [参照テキスト取得](#参照テキスト取得)
+* [ブックマーク・ナビゲーション](#ブックマーク・ナビゲーション)
+    * [ブックマーク取得](#ブックマーク取得)
+    * [ブックマーク削除](#ブックマーク削除)
+    * [ブックマーク名変更](#ブックマーク名変更)
+* [アウトライン・グラフ](#アウトライン・グラフ)
+    * [ドキュメントアウトライン取得](#ドキュメントアウトライン取得)
+* [拡張エクスポート](#拡張エクスポート)
+    * [Word文書エクスポート](#Word文書エクスポート)
+    * [EPUBエクスポート](#EPUBエクスポート)
+    * [ODTエクスポート](#ODTエクスポート)
+    * [RTFエクスポート](#RTFエクスポート)
+    * [AsciiDocエクスポート](#AsciiDocエクスポート)
+    * [MediaWikiエクスポート](#MediaWikiエクスポート)
+    * [Org-modeエクスポート](#Org-modeエクスポート)
+    * [reStructuredTextエクスポート](#reStructuredTextエクスポート)
+    * [Textileエクスポート](#Textileエクスポート)
+    * [OPMLエクスポート](#OPMLエクスポート)
+    * [リソースエクスポート](#リソースエクスポート)
+    * [一時コンテンツエクスポート](#一時コンテンツエクスポート)
+* [アーカイブ・圧縮](#アーカイブ・圧縮)
+    * [ZIP圧縮](#ZIP圧縮)
+    * [ZIP解凍](#ZIP解凍)
+* [ブロードキャスト・メッセージング](#ブロードキャスト・メッセージング)
+    * [メッセージ投稿](#メッセージ投稿)
+    * [チャンネル情報取得](#チャンネル情報取得)
+    * [チャンネル一覧取得](#チャンネル一覧取得)
+    * [メッセージ公開](#メッセージ公開)
+
+---
+
+## UI管理
+
+UI管理APIを使用して、SiYuanアプリケーションの各UIコンポーネントを動的にリロードできます。プラグイン開発において、データ変更後のUI更新に特に有用です。
+
+### UIのリロード
+
+**エンドポイント:** `/api/ui/reloadUI`
+
+SiYuanのUI全体をリロードします。アプリケーション設定の変更後やプラグインのインストール後に使用します。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+**使用例（JavaScript）:**
+```javascript
+const response = await fetch('/api/ui/reloadUI', {
+  method: 'POST',
+  headers: {
+    'Authorization': `Token ${apiToken}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({})
+});
+```
+
+### ファイルツリーのリロード
+
+**エンドポイント:** `/api/ui/reloadFiletree`
+
+左サイドバーのファイルツリーパネルをリロードします。ノートブックやドキュメントの構造が変更された場合に使用します。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Protyleエディターのリロード
+
+**エンドポイント:** `/api/ui/reloadProtyle`
+
+指定したProtyleエディターインスタンスをリロードします。ブロック内容の大幅な変更後に使用します。
+
+**リクエスト:**
+```json
+{
+  "id": "20210808180117-6v0mkxr"
+}
+```
+
+**パラメータ:**
+- `id` (文字列): リロードするProtyleのID
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### タグパネルのリロード
+
+**エンドポイント:** `/api/ui/reloadTag`
+
+右サイドバーのタグパネルをリロードします。タグが追加・削除・変更された場合に使用します。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### 属性ビューのリロード
+
+**エンドポイント:** `/api/ui/reloadAttributeView`
+
+属性ビュー（データベースビュー）をリロードします。データベースの構造やデータが変更された場合に使用します。
+
+**リクエスト:**
+```json
+{
+  "id": "20210808180117-czj9bvb"
+}
+```
+
+**パラメータ:**
+- `id` (文字列): リロードする属性ビューのID
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+---
+
+## ワークスペース管理
+
+ワークスペース管理APIを使用して、複数のワークスペース間での切り替えや管理を行います。
+
+### ワークスペース一覧取得
+
+**エンドポイント:** `/api/system/getWorkspaces`
+
+利用可能なワークスペースの一覧を取得します。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "path": "/Users/user/Documents/SiYuan/workspace1",
+      "name": "workspace1"
+    },
+    {
+      "path": "/Users/user/Documents/SiYuan/workspace2", 
+      "name": "workspace2"
+    }
+  ]
+}
+```
+
+### ワークスペースディレクトリ作成
+
+**エンドポイント:** `/api/system/createWorkspaceDir`
+
+新しいワークスペースディレクトリを作成します。
+
+**リクエスト:**
+```json
+{
+  "path": "/Users/user/Documents/SiYuan/new-workspace"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### ワークスペースディレクトリチェック
+
+**エンドポイント:** `/api/system/checkWorkspaceDir`
+
+指定したパスがワークスペースとして有効かチェックします。
+
+**リクエスト:**
+```json
+{
+  "path": "/Users/user/Documents/SiYuan/test-workspace"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "valid": true
+  }
+}
+```
+
+### ワークスペースディレクトリ削除
+
+**エンドポイント:** `/api/system/removeWorkspaceDir`
+
+ワークスペースをリストから削除します（物理的なファイルは削除されません）。
+
+**リクエスト:**
+```json
+{
+  "path": "/Users/user/Documents/SiYuan/old-workspace"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### ワークスペース情報取得
+
+**エンドポイント:** `/api/system/getWorkspaceInfo`
+
+現在のワークスペースの詳細情報を取得します。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "path": "/Users/user/Documents/SiYuan/current-workspace",
+    "name": "current-workspace",
+    "size": 1024000,
+    "notebooks": 5,
+    "documents": 127
+  }
+}
+```
+
+---
+
+## プラグイン・拡張機能管理
+
+プラグイン、テーマ、ウィジェットなどの拡張機能を管理するためのAPIです。
+
+### プラグインのロード
+
+**エンドポイント:** `/api/petal/loadPetals`
+
+利用可能なプラグイン（Petal）を読み込みます。
+
+**リクエスト:**
+```json
+{
+  "frontend": "desktop"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "name": "sample-plugin",
+      "enabled": true,
+      "displayName": "Sample Plugin"
+    }
+  ]
+}
+```
+
+### プラグインの有効化設定
+
+**エンドポイント:** `/api/petal/setPetalEnabled`
+
+プラグインの有効/無効を切り替えます。
+
+**リクエスト:**
+```json
+{
+  "name": "sample-plugin",
+  "enabled": true
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Bazaarプラグイン取得
+
+**エンドポイント:** `/api/bazaar/getBazaarPlugin`
+
+Bazaar（公式マーケットプレイス）からプラグイン一覧を取得します。
+
+**リクエスト:**
+```json
+{
+  "frontend": "desktop"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "packages": [
+      {
+        "name": "plugin-sample",
+        "displayName": "Plugin Sample",
+        "version": "1.0.0",
+        "author": "88250",
+        "url": "https://github.com/siyuan-note/plugin-sample"
+      }
+    ]
+  }
+}
+```
+
+### Bazaarプラグインインストール
+
+**エンドポイント:** `/api/bazaar/installBazaarPlugin`
+
+Bazaarからプラグインをインストールします。
+
+**リクエスト:**
+```json
+{
+  "name": "plugin-sample",
+  "repoURL": "https://github.com/siyuan-note/plugin-sample",
+  "repoHash": "main"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### プラグインアンインストール
+
+**エンドポイント:** `/api/bazaar/uninstallBazaarPlugin`
+
+インストール済みプラグインをアンインストールします。
+
+**リクエスト:**
+```json
+{
+  "name": "plugin-sample"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### テーマ管理
+
+**Bazaarテーマ取得:** `/api/bazaar/getBazaarTheme`
+**テーマインストール:** `/api/bazaar/installBazaarTheme`
+**テーマアンインストール:** `/api/bazaar/uninstallBazaarTheme`
+
+テーマの管理はプラグインと同様の形式で行います。
+
+### ウィジェット管理
+
+**Bazaarウィジェット取得:** `/api/bazaar/getBazaarWidget`
+**ウィジェットインストール:** `/api/bazaar/installBazaarWidget`
+**ウィジェットアンインストール:** `/api/bazaar/uninstallBazaarWidget`
+
+### アイコン管理
+
+**Bazaarアイコン取得:** `/api/bazaar/getBazaarIcon`
+**アイコンインストール:** `/api/bazaar/installBazaarIcon`
+**アイコンアンインストール:** `/api/bazaar/uninstallBazaarIcon`
+
+### スニペット管理
+
+**エンドポイント:** `/api/snippet/getSnippet`
+
+スニペット一覧を取得します。
+
+**リクエスト:**
+```json
+{
+  "type": "css"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "name": "custom-style",
+      "type": "css",
+      "enabled": true,
+      "content": ".custom { color: red; }"
+    }
+  ]
+}
+```
+
+---
+
+## 属性ビュー（データベース） 
+
+属性ビューAPIを使用して、SiYuanのデータベース機能を操作できます。テーブル、看板、ギャラリーなどの表示形式をサポートします。
+
+### 属性ビュー取得
+
+**エンドポイント:** `/api/av/getAttributeView`
+
+指定したIDの属性ビューを取得します。
+
+**リクエスト:**
+```json
+{
+  "id": "20210808180117-6v0mkxr"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "id": "20210808180117-6v0mkxr",
+    "name": "タスク管理",
+    "viewType": "table",
+    "keyValues": [
+      {
+        "key": {
+          "id": "title",
+          "name": "タイトル",
+          "type": "text"
+        },
+        "values": [
+          {
+            "id": "row1",
+            "value": "タスク1"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### 属性ビューレンダリング
+
+**エンドポイント:** `/api/av/renderAttributeView`
+
+属性ビューをHTMLとしてレンダリングします。
+
+**リクエスト:**
+```json
+{
+  "id": "20210808180117-6v0mkxr",
+  "viewID": "view1"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "html": "<div class=\"av\">...</div>"
+  }
+}
+```
+
+### 属性ビューブロック追加
+
+**エンドポイント:** `/api/av/addAttributeViewBlocks`
+
+属性ビューに新しい行（ブロック）を追加します。
+
+**リクエスト:**
+```json
+{
+  "avID": "20210808180117-6v0mkxr",
+  "blockIDs": ["20210808180117-new1"]
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### 属性ビューキー追加
+
+**エンドポイント:** `/api/av/addAttributeViewKey`
+
+属性ビューに新しい列（キー）を追加します。
+
+**リクエスト:**
+```json
+{
+  "avID": "20210808180117-6v0mkxr",
+  "key": {
+    "name": "ステータス",
+    "type": "select",
+    "options": [
+      {"name": "未完了", "color": "red"},
+      {"name": "完了", "color": "green"}
+    ]
+  }
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "keyID": "status-key-id"
+  }
+}
+```
+
+### 属性ビューレイアウト変更
+
+**エンドポイント:** `/api/av/changeAttrViewLayout`
+
+属性ビューの表示レイアウトを変更します（テーブル、看板、ギャラリー）。
+
+**リクエスト:**
+```json
+{
+  "avID": "20210808180117-6v0mkxr",
+  "viewID": "view1",
+  "layoutType": "kanban"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### 属性ビュー検索
+
+**エンドポイント:** `/api/av/searchAttributeView`
+
+属性ビュー内のデータを検索します。
+
+**リクエスト:**
+```json
+{
+  "avID": "20210808180117-6v0mkxr",
+  "query": "タスク"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "blocks": [
+      {
+        "id": "20210808180117-task1",
+        "content": "タスク1の内容"
+      }
+    ]
+  }
+}
+```
+
+### 属性ビューフィルター・ソート
+
+**エンドポイント:** `/api/av/getAttributeViewFilterSort`
+
+属性ビューのフィルターとソート設定を取得します。
+
+**リクエスト:**
+```json
+{
+  "avID": "20210808180117-6v0mkxr",
+  "viewID": "view1"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "filters": [
+      {
+        "column": "status",
+        "operator": "=",
+        "value": "未完了"
+      }
+    ],
+    "sorts": [
+      {
+        "column": "created",
+        "order": "desc"
+      }
+    ]
+  }
+}
+```
+
+---
+
+## 高度な検索・インデックス
+
+SiYuanの強力な検索機能とインデックス管理を行うAPIです。
+
+### フルテキスト検索
+
+**エンドポイント:** `/api/search/fullTextSearchBlock`
+
+ブロック内容に対してフルテキスト検索を実行します。
+
+**リクエスト:**
+```json
+{
+  "query": "プラグイン開発",
+  "types": {
+    "mathBlock": true,
+    "table": true,
+    "blockquote": true,
+    "superBlock": true,
+    "paragraph": true,
+    "document": true,
+    "heading": true,
+    "list": true,
+    "listItem": true,
+    "codeBlock": true,
+    "htmlBlock": true
+  }
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "blocks": [
+      {
+        "id": "20210808180117-6v0mkxr",
+        "parentID": "",
+        "rootID": "20210808180117-czj9bvb",
+        "hash": "abc123",
+        "box": "20210808180117-6v0mkxr",
+        "path": "/20210808180117-6v0mkxr/20210808180117-czj9bvb.sy",
+        "hPath": "/プラグイン開発ガイド",
+        "name": "プラグイン開発ガイド",
+        "alias": "",
+        "memo": "",
+        "tag": "",
+        "content": "プラグイン開発について説明します",
+        "fcontent": "プラグイン開発について説明します",
+        "markdown": "プラグイン開発について説明します",
+        "length": 15,
+        "type": "d",
+        "subType": "",
+        "ial": {},
+        "sort": 1,
+        "created": "20210808180117",
+        "updated": "20210808180117"
+      }
+    ],
+    "matchedBlockCount": 1,
+    "matchedRootCount": 1
+  }
+}
+```
+
+### アセット検索
+
+**エンドポイント:** `/api/search/searchAsset`
+
+画像、動画、音声、ドキュメントなどのアセットを検索します。
+
+**リクエスト:**
+```json
+{
+  "k": "screenshot",
+  "types": ["image", "video", "audio", "doc"]
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "path": "assets/screenshot-20210808180117-abc123.png",
+      "name": "screenshot-20210808180117-abc123.png",
+      "type": "image"
+    }
+  ]
+}
+```
+
+### アセットコンテンツ検索
+
+**エンドポイント:** `/api/search/fullTextSearchAssetContent`
+
+アセット内のテキストコンテンツを検索します（OCRやドキュメント内容）。
+
+**リクエスト:**
+```json
+{
+  "query": "API"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "assets": [
+      {
+        "path": "assets/document.pdf",
+        "content": "API仕様について...",
+        "matches": [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "API"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### 埋め込みブロック検索
+
+**エンドポイント:** `/api/search/searchEmbedBlock`
+
+埋め込みブロックを検索します。
+
+**リクエスト:**
+```json
+{
+  "query": "SELECT * FROM blocks",
+  "headingMode": 0
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "blocks": [
+      {
+        "id": "20210808180117-6v0mkxr",
+        "content": "埋め込まれたクエリ結果"
+      }
+    ]
+  }
+}
+```
+
+### 無効な参照検索
+
+**エンドポイント:** `/api/search/listInvalidBlockRefs`
+
+存在しないブロックへの参照を検索します。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "id": "20210808180117-invalid",
+      "refText": "((20210808180117-invalid 無効な参照))"
+    }
+  ]
+}
+```
+
+### 検索・置換
+
+**エンドポイント:** `/api/search/findReplace`
+
+指定した条件でテキストの検索・置換を行います。
+
+**リクエスト:**
+```json
+{
+  "k": "古いテキスト",
+  "r": "新しいテキスト",
+  "ids": ["20210808180117-6v0mkxr"]
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "ids": ["20210808180117-6v0mkxr"]
+  }
+}
+```
+
+---
+
+## 同期・クラウド機能
+
+マルチデバイス間での同期とクラウドストレージとの連携機能です。
+
+### 同期実行
+
+**エンドポイント:** `/api/sync/performSync`
+
+手動で同期を実行します。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "synced": true,
+    "uploadCount": 5,
+    "downloadCount": 3
+  }
+}
+```
+
+### 同期情報取得
+
+**エンドポイント:** `/api/sync/getSyncInfo`
+
+現在の同期状態と設定を取得します。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "enabled": true,
+    "provider": "s3",
+    "lastSync": "2021-08-08T18:01:17Z",
+    "stat": {
+      "uploaded": 1024,
+      "downloaded": 512
+    }
+  }
+}
+```
+
+### 同期設定
+
+同期に関する各種設定を行います：
+
+- **同期有効化:** `/api/sync/setSyncEnable`
+- **同期間隔設定:** `/api/sync/setSyncInterval`
+- **同期モード設定:** `/api/sync/setSyncMode`
+- **同期プロバイダー設定:** `/api/sync/setSyncProvider`
+
+### クラウド同期ディレクトリ管理
+
+**ディレクトリ作成:** `/api/sync/createCloudSyncDir`
+**ディレクトリ一覧:** `/api/sync/listCloudSyncDir`
+**ディレクトリ削除:** `/api/sync/removeCloudSyncDir`
+
+### S3同期プロバイダー
+
+**S3設定:** `/api/sync/setSyncProviderS3`
+**S3エクスポート:** `/api/sync/exportSyncProviderS3`  
+**S3インポート:** `/api/sync/importSyncProviderS3`
+
+### WebDAV同期プロバイダー
+
+**WebDAV設定:** `/api/sync/setSyncProviderWebDAV`
+**WebDAVエクスポート:** `/api/sync/exportSyncProviderWebDAV`
+**WebDAVインポート:** `/api/sync/importSyncProviderWebDAV`
+
+---
+
+## バージョン管理・履歴
+
+ドキュメントのバージョン管理とスナップショット機能です。
+
+### スナップショット作成
+
+**エンドポイント:** `/api/repo/createSnapshot`
+
+現在の状態のスナップショットを作成します。
+
+**リクエスト:**
+```json
+{
+  "memo": "機能追加前のバックアップ"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "id": "snapshot-20210808180117"
+  }
+}
+```
+
+### スナップショット一覧取得
+
+**エンドポイント:** `/api/repo/getRepoSnapshots`
+
+作成済みスナップショットの一覧を取得します。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "id": "snapshot-20210808180117",
+      "memo": "機能追加前のバックアップ",
+      "created": "2021-08-08T18:01:17Z"
+    }
+  ]
+}
+```
+
+### スナップショット比較
+
+**エンドポイント:** `/api/repo/diffRepoSnapshots`
+
+2つのスナップショット間の差分を取得します。
+
+**リクエスト:**
+```json
+{
+  "left": "snapshot-20210808180117",
+  "right": "snapshot-20210808190117"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "diffs": [
+      {
+        "path": "/ドキュメント1.md",
+        "type": "modified",
+        "changes": [
+          {
+            "line": 10,
+            "old": "古いテキスト",
+            "new": "新しいテキスト"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### リポジトリチェックアウト
+
+**エンドポイント:** `/api/repo/checkoutRepo`
+
+指定したスナップショットの状態に戻します。
+
+**リクエスト:**
+```json
+{
+  "id": "snapshot-20210808180117"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### クラウドスナップショット
+
+クラウドストレージとのスナップショット同期：
+
+- **クラウドスナップショット取得:** `/api/repo/getCloudRepoSnapshots`
+- **クラウドスナップショットアップロード:** `/api/repo/uploadCloudSnapshot`
+- **クラウドスナップショットダウンロード:** `/api/repo/downloadCloudSnapshot`
+
+---
+
+## 間隔反復学習（フラッシュカード）
+
+SiYuanの間隔反復学習機能を使用してフラッシュカードを管理します。
+
+### フラッシュカードデッキ作成
+
+**エンドポイント:** `/api/riff/createRiffDeck`
+
+新しいフラッシュカードデッキを作成します。
+
+**リクエスト:**
+```json
+{
+  "name": "英単語学習",
+  "notebook": "20210808180117-6v0mkxr"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "id": "deck-20210808180117"
+  }
+}
+```
+
+### フラッシュカード追加
+
+**エンドポイント:** `/api/riff/addRiffCards`
+
+デッキにフラッシュカードを追加します。
+
+**リクエスト:**
+```json
+{
+  "deckID": "deck-20210808180117",
+  "blockIDs": ["20210808180117-card1", "20210808180117-card2"]
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### フラッシュカード復習
+
+**エンドポイント:** `/api/riff/reviewRiffCard`
+
+フラッシュカードの復習結果を記録します。
+
+**リクエスト:**
+```json
+{
+  "cardID": "20210808180117-card1",
+  "rating": 3
+}
+```
+
+**パラメータ:**
+- `rating`: 1(Again) / 2(Hard) / 3(Good) / 4(Easy)
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "nextDue": "2021-08-10T18:01:17Z"
+  }
+}
+```
+
+### 復習予定カード取得
+
+**エンドポイント:** `/api/riff/getRiffDueCards`
+
+復習予定のカードを取得します。
+
+**リクエスト:**
+```json
+{
+  "deckID": "deck-20210808180117"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "cards": [
+      {
+        "id": "20210808180117-card1",
+        "blockID": "20210808180117-block1",
+        "due": "2021-08-08T18:01:17Z"
+      }
+    ]
+  }
+}
+```
+
+---
+
+## AI統合
+
+SiYuanのAI機能との連携APIです。
+
+### ChatGPT連携
+
+**エンドポイント:** `/api/ai/chatGPT`
+
+ChatGPTと対話を行います。
+
+**リクエスト:**
+```json
+{
+  "msg": "この文章を要約してください",
+  "context": "長い文章の内容..."
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "choices": [
+      {
+        "message": {
+          "content": "要約された内容がここに表示されます"
+        }
+      }
+    ]
+  }
+}
+```
+
+### ChatGPTアクション付き連携
+
+**エンドポイント:** `/api/ai/chatGPTWithAction`
+
+ChatGPTからの応答を特定のアクションと組み合わせます。
+
+**リクエスト:**
+```json
+{
+  "msg": "新しいドキュメントを作成して",
+  "action": "createDoc"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "response": "新しいドキュメントを作成しました",
+    "actionResult": {
+      "docID": "20210808180117-newdoc"
+    }
+  }
+}
+```
 
 ---
 
@@ -1673,6 +3067,557 @@ await renameDocument("20210902210113-0avi12f", "更新されたドキュメン�
   - `base32` | `base32-std`
   - `base32-hex`
   - `hex`
+
+---
+
+## 拡張システム機能
+
+### システム設定の取得
+
+**エンドポイント:** `/api/system/getConf`
+
+SiYuanのシステム設定を取得します。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "appearance": {
+      "mode": 0,
+      "codeBlockTheme": "github"
+    },
+    "editor": {
+      "fontSize": 16,
+      "lineHeight": 22
+    },
+    "export": {
+      "docx": true,
+      "pdf": false
+    }
+  }
+}
+```
+
+### システム設定のエクスポート
+
+**エンドポイント:** `/api/system/exportConf`
+
+システム設定をエクスポートします。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "zip": "base64-encoded-zip-content"
+  }
+}
+```
+
+### システム設定のインポート
+
+**エンドポイント:** `/api/system/importConf`
+
+システム設定をインポートします。
+
+**リクエスト:**
+```json
+{
+  "data": "base64-encoded-zip-content"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### システムフォント取得
+
+**エンドポイント:** `/api/system/getSysFonts`
+
+システムにインストールされているフォント一覧を取得します。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    "Arial",
+    "Helvetica", 
+    "Times New Roman",
+    "Source Han Sans"
+  ]
+}
+```
+
+---
+
+## アカウント・クラウド
+
+### アカウントログイン
+
+**エンドポイント:** `/api/account/login`
+
+SiYuanクラウドアカウントにログインします。
+
+**リクエスト:**
+```json
+{
+  "userName": "your-username",
+  "password": "your-password"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "token": "account-token",
+    "user": {
+      "userId": "12345",
+      "userName": "your-username",
+      "userNickname": "Your Name"
+    }
+  }
+}
+```
+
+### アクティベーションコード確認
+
+**エンドポイント:** `/api/account/checkActivationcode`
+
+アクティベーションコードの有効性を確認します。
+
+**リクエスト:**
+```json
+{
+  "data": "activation-code"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "valid": true,
+    "type": "pro",
+    "expireTime": "2024-12-31"
+  }
+}
+```
+
+---
+
+## 拡張ブロック操作
+
+### ブロック存在確認
+
+**エンドポイント:** `/api/block/checkBlockExist`
+
+指定したIDのブロックが存在するか確認します。
+
+**リクエスト:**
+```json
+{
+  "id": "20210808180117-6v0mkxr"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "exist": true
+  }
+}
+```
+
+### ブロック情報取得
+
+**エンドポイント:** `/api/block/getBlockInfo`
+
+ブロックの詳細情報を取得します。
+
+**リクエスト:**
+```json
+{
+  "id": "20210808180117-6v0mkxr"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "id": "20210808180117-6v0mkxr",
+    "parentID": "20210808180117-czj9bvb",
+    "rootID": "20210808180117-czj9bvb",
+    "hash": "abc123",
+    "box": "20210808180117-6v0mkxr",
+    "path": "/20210808180117-6v0mkxr/20210808180117-czj9bvb.sy",
+    "hPath": "/ドキュメント名",
+    "name": "ブロック名",
+    "type": "p",
+    "subType": "",
+    "created": "20210808180117",
+    "updated": "20210808180117"
+  }
+}
+```
+
+### バッチブロック操作
+
+**バッチ挿入:** `/api/block/batchInsertBlock`
+**バッチ更新:** `/api/block/batchUpdateBlock`
+**バッチ追加:** `/api/block/batchAppendBlock`
+
+複数のブロックを一度に操作できます。
+
+**リクエスト例（バッチ挿入）:**
+```json
+{
+  "operations": [
+    {
+      "parentID": "20210808180117-czj9bvb",
+      "dataType": "markdown",
+      "data": "# 新しいヘディング1"
+    },
+    {
+      "parentID": "20210808180117-czj9bvb", 
+      "dataType": "markdown",
+      "data": "新しい段落の内容"
+    }
+  ]
+}
+```
+
+---
+
+## 高度なアセット管理
+
+### アセット統計
+
+**エンドポイント:** `/api/asset/statAsset`
+
+アセットファイルの統計情報を取得します。
+
+**リクエスト:**
+```json
+{
+  "path": "assets/image.png"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "size": 1024000,
+    "lastModified": "2021-08-08T18:01:17Z",
+    "type": "image/png"
+  }
+}
+```
+
+### OCR機能
+
+**エンドポイント:** `/api/asset/ocr`
+
+画像内のテキストをOCRで認識します。
+
+**リクエスト:**
+```json
+{
+  "path": "assets/screenshot.png"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "text": "画像内のテキスト内容"
+  }
+}
+```
+
+### 未使用アセット管理
+
+**未使用アセット取得:** `/api/asset/getUnusedAssets`
+**未使用アセット削除:** `/api/asset/removeUnusedAssets`
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "path": "assets/unused-image.png",
+      "size": 512000
+    }
+  ]
+}
+```
+
+---
+
+## タグ・参照管理
+
+### タグ取得
+
+**エンドポイント:** `/api/tag/getTag`
+
+タグ一覧を取得します。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "name": "重要",
+      "count": 5
+    },
+    {
+      "name": "TODO",
+      "count": 3
+    }
+  ]
+}
+```
+
+### バックリンク取得
+
+**エンドポイント:** `/api/ref/getBacklink`
+
+指定したブロックへのバックリンクを取得します。
+
+**リクエスト:**
+```json
+{
+  "id": "20210808180117-6v0mkxr"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "backlinks": [
+      {
+        "id": "20210808180117-ref1",
+        "content": "参照元のブロック内容",
+        "path": "/参照元ドキュメント"
+      }
+    ]
+  }
+}
+```
+
+---
+
+## 拡張エクスポート
+
+### Word文書エクスポート
+
+**エンドポイント:** `/api/export/exportDocx`
+
+ドキュメントをWord形式でエクスポートします。
+
+**リクエスト:**
+```json
+{
+  "id": "20210808180117-6v0mkxr"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "zip": "base64-encoded-docx-content"
+  }
+}
+```
+
+### その他のエクスポート形式
+
+以下のエンドポイントで様々な形式でのエクスポートが可能です：
+
+- **EPUBエクスポート:** `/api/export/exportEPUB`
+- **ODTエクスポート:** `/api/export/exportODT`
+- **RTFエクスポート:** `/api/export/exportRTF`
+- **AsciiDocエクスポート:** `/api/export/exportAsciiDoc`
+- **MediaWikiエクスポート:** `/api/export/exportMediaWiki`
+- **Org-modeエクスポート:** `/api/export/exportOrgMode`
+- **reStructuredTextエクスポート:** `/api/export/exportReStructuredText`
+- **Textileエクスポート:** `/api/export/exportTextile`
+- **OPMLエクスポート:** `/api/export/exportOPML`
+
+すべて同様の形式でリクエスト・レスポンスを行います。
+
+---
+
+## アーカイブ・圧縮
+
+### ZIP圧縮
+
+**エンドポイント:** `/api/archive/zip`
+
+ファイルやフォルダをZIP圧縮します。
+
+**リクエスト:**
+```json
+{
+  "path": "/path/to/folder"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "zip": "base64-encoded-zip-content"
+  }
+}
+```
+
+### ZIP解凍
+
+**エンドポイント:** `/api/archive/unzip`
+
+ZIPファイルを解凍します。
+
+**リクエスト:**
+```json
+{
+  "zipData": "base64-encoded-zip-content",
+  "path": "/path/to/extract"
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+---
+
+## ブロードキャスト・メッセージング
+
+### メッセージ投稿
+
+**エンドポイント:** `/api/broadcast/postMessage`
+
+ブロードキャストメッセージを投稿します。
+
+**リクエスト:**
+```json
+{
+  "channel": "general",
+  "message": "Hello, World!",
+  "data": {}
+}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "messageId": "msg-123456"
+  }
+}
+```
+
+### チャンネル一覧取得
+
+**エンドポイント:** `/api/broadcast/getChannels`
+
+利用可能なブロードキャストチャンネルを取得します。
+
+**リクエスト:**
+```json
+{}
+```
+
+**レスポンス:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "name": "general",
+      "description": "一般チャンネル",
+      "memberCount": 10
+    }
+  ]
+}
+```
+
+---
+
+このように、SiYuan APIは423個の豊富なエンドポイントを提供し、あらゆる操作をプログラム的に実行できます。プラグイン開発において、これらのAPIを組み合わせることで、非常に強力で柔軟な機能を実現できます。
 
 ## システム
 
