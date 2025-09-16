@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-<a href="README_zh_CN.md">中文</a> | <a href="README_ja_JP.md">日本語</a>
+<a href="README.md">English</a> | <a href="README_zh_CN.md">中文</a> | <a href="README_ja_JP.md">日本語</a>
 </p>
 
 ---
@@ -49,10 +49,16 @@ This repository is specifically designed for **SiYuan plugin developers** who ne
 
 For plugin development, please refer to:
 
+### Official Resources
 * **[Plugin API Documentation](https://github.com/siyuan-note/petal)** - Official Plugin API
 * **[Plugin Sample](https://github.com/siyuan-note/plugin-sample)** - Basic plugin template
 * **[Plugin Sample with Vite & Svelte](https://github.com/siyuan-note/plugin-sample-vite-svelte)** - Modern plugin template
 * **[Community Marketplace](https://github.com/siyuan-note/bazaar)** - Plugin distribution
+
+### Comprehensive Guides
+* **[Advanced Plugin Patterns (日本語)](ADVANCED_PLUGIN_PATTERNS_ja_JP.md)** - Advanced patterns and architectures for complex plugins
+* **[Plugin Best Practices (日本語)](PLUGIN_BEST_PRACTICES_ja_JP.md)** - Best practices and development guidelines
+* **[Plugin Showcase (日本語)](PLUGIN_SHOWCASE_ja_JP.md)** - Examples and showcase of community plugins
 
 ## SiYuan Main Repository
 
