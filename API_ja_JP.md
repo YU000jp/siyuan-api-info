@@ -6,6 +6,22 @@ SiYuanノートアプリケーションAPIの包括的ガイドです。このAP
 - [English](API.md)
 - [中文 (Chinese)](API_zh_CN.md)
 
+## 📚 用途別ガイド（推奨）
+
+初めてSiYuan APIを使用する方や、特定の用途に特化した情報が必要な方は、以下の用途別ガイドをご利用ください：
+
+* **[初心者向けAPIガイド](API_BEGINNERS_ja_JP.md)** - APIを初めて使用する方向け。基本概念から実際の使用方法まで段階的に学習
+* **[プラグイン開発者向けAPIガイド](API_PLUGIN_DEVELOPERS_ja_JP.md)** - プラグイン開発に特化したAPIと実用例
+* **[高度なAPIパターン](API_ADVANCED_PATTERNS_ja_JP.md)** - 複雑な操作、アーキテクチャパターン、パフォーマンス最適化
+* **[カテゴリ別APIリファレンス](API_REFERENCE_BY_CATEGORY_ja_JP.md)** - 機能別に整理されたAPIエンドポイント一覧
+* **[未記載エンドポイント補完](API_MISSING_ENDPOINTS_ja_JP.md)** - 追加・実験的なAPIエンドポイント
+
+## 📖 関連ドキュメント
+
+* **[プラグイン開発ベストプラクティス](PLUGIN_BEST_PRACTICES_ja_JP.md)** - 高品質なプラグイン開発のガイドライン
+* **[高度なプラグインパターン](ADVANCED_PLUGIN_PATTERNS_ja_JP.md)** - 実践的なプラグイン開発パターン
+* **[プラグインショーケース](PLUGIN_SHOWCASE_ja_JP.md)** - 優秀なプラグインの実例
+
 ---
 
 ## 概要

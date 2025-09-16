@@ -27,8 +27,19 @@ This repository is specifically designed for **SiYuan plugin developers** who ne
 
 ## API Documentation
 
-* [API Documentation (English)](API.md)
-* [API Documentation (中文)](API_zh_CN.md)
+### By Use Case (Recommended)
+
+* **[Beginner's API Guide (日本語)](API_BEGINNERS_ja_JP.md)** - Getting started with SiYuan API
+* **[Plugin Developer's API Guide (日本語)](API_PLUGIN_DEVELOPERS_ja_JP.md)** - APIs specifically for plugin development  
+* **[Advanced API Patterns (日本語)](API_ADVANCED_PATTERNS_ja_JP.md)** - Complex operations and best practices
+* **[API Reference by Category (日本語)](API_REFERENCE_BY_CATEGORY_ja_JP.md)** - APIs organized by functionality
+* **[Missing Endpoints Supplement (日本語)](API_MISSING_ENDPOINTS_ja_JP.md)** - Additional API endpoints
+
+### Complete API Reference
+
+* [API Documentation (English)](API.md) - Complete endpoint reference
+* [API Documentation (中文)](API_zh_CN.md) - Chinese version
+* [API Documentation (日本語)](API_ja_JP.md) - Japanese version
 
 ## Plugin Development Resources
 
