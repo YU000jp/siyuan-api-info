@@ -15,6 +15,7 @@
   - [メニュー拡張プラグイン](#メニュー拡張プラグイン)
 - [データ統合プラグイン例](#データ統合プラグイン例)
   - [データベース操作プラグイン](#データベース操作プラグイン)
+  - [バックリンク機能プラグイン](#バックリンク機能プラグイン)
   - [検索拡張プラグイン](#検索拡張プラグイン)
   - [同期連携プラグイン](#同期連携プラグイン)
 - [高度なプラグインパターン](#高度なプラグインパターン)
@@ -1651,6 +1652,555 @@ export default class DatabasePlugin extends Plugin {
    - 属性ビュー（データベース）の作成・編集
    - テンプレートベースのデータベース生成
    - 構造化データの管理
+
+---
+
+### バックリンク機能プラグイン
+
+バックリンク機能は、ドキュメント間の双方向参照を管理し、知識のネットワークを可視化する重要な機能です。このプラグインは、バックリンクの検出、可視化、管理機能を提供します。
+
+```javascript
+// バックリンク管理プラグイン
+export default class BacklinkPlugin extends Plugin {
+
+    async onload() {
+        // バックリンクパネルを追加
+        this.addTab({
+            type: "backlink-panel",
+            icon: "iconLink",
+            title: "Backlinks",
+            init: () => {
+                this.tab.panelElement.innerHTML = this.renderBacklinkPanel();
+                this.initBacklinkPanel();
+            }
+        });
+
+        // トップバーにバックリンクビューアイコンを追加
+        this.addTopBar({
+            icon: "iconGraph",
+            title: "Backlink Graph",
+            callback: () => this.showBacklinkGraph()
+        });
+
+        // コマンドを追加
+        this.addCommand({
+            langKey: "showBacklinks",
+            hotkey: "⌘⌥L",
+            callback: () => this.showCurrentDocBacklinks()
+        });
+
+        // ドキュメントロード時にバックリンクを更新
+        this.app.workspace.on("layout-ready", () => {
+            this.refreshBacklinks();
+        });
+    }
+
+    private renderBacklinkPanel(): string {
+        return `
+            <div class="backlink-container">
+                <div class="backlink-toolbar">
+                    <button class="b3-button b3-button--small" id="refreshBacklinks">
+                        <svg><use xlink:href="#iconRefresh"></use></svg>
+                        更新
+                    </button>
+                    <button class="b3-button b3-button--small" id="backlinkSettings">
+                        <svg><use xlink:href="#iconSettings"></use></svg>
+                        設定
+                    </button>
+                </div>
+                <div class="backlink-search">
+                    <input type="text" class="b3-text-field" placeholder="バックリンクを検索..." id="backlinkSearch">
+                </div>
+                <div class="backlink-content" id="backlinkContent">
+                    <div class="backlink-loading">バックリンクを読み込み中...</div>
+                </div>
+            </div>
+        `;
+    }
+
+    private initBacklinkPanel() {
+        const refreshBtn = this.tab.panelElement.querySelector("#refreshBacklinks");
+        const settingsBtn = this.tab.panelElement.querySelector("#backlinkSettings");
+        const searchInput = this.tab.panelElement.querySelector("#backlinkSearch");
+
+        refreshBtn?.addEventListener("click", () => this.refreshBacklinks());
+        settingsBtn?.addEventListener("click", () => this.showBacklinkSettings());
+        searchInput?.addEventListener("input", (e) => this.filterBacklinks(e.target.value));
+    }
+
+    private async refreshBacklinks() {
+        const currentDoc = this.app.workspace.activeLeaf?.doc;
+        if (!currentDoc) return;
+
+        const contentElement = this.tab.panelElement.querySelector("#backlinkContent");
+        if (!contentElement) return;
+
+        try {
+            // 現在のドキュメントへのバックリンクを検索
+            const backlinks = await this.findBacklinks(currentDoc.id);
+            
+            // 相互リンク（双方向リンク）を検索
+            const mutualLinks = await this.findMutualLinks(currentDoc.id);
+
+            // 未リンクの関連ドキュメントを検索
+            const potentialLinks = await this.findPotentialLinks(currentDoc);
+
+            contentElement.innerHTML = this.renderBacklinkResults({
+                backlinks,
+                mutualLinks,
+                potentialLinks,
+                currentDoc
+            });
+
+            this.bindBacklinkEvents(contentElement);
+        } catch (error) {
+            console.error("Failed to refresh backlinks:", error);
+            contentElement.innerHTML = '<div class="backlink-error">バックリンクの読み込みに失敗しました</div>';
+        }
+    }
+
+    private async findBacklinks(docId: string): Promise<any[]> {
+        // ドキュメント情報を取得
+        const docInfo = await this.apiRequest("/block/getBlockInfo", {
+            id: docId
+        });
+
+        if (docInfo.code !== 0) return [];
+
+        const docTitle = docInfo.data.name;
+        const docPath = docInfo.data.path;
+
+        // バックリンクを検索（複数のパターン）
+        const searchQueries = [
+            `"((${docId}))"`,              // ブロック参照
+            `"[${docTitle}]"`,              // マークダウンリンク
+            `"[[${docTitle}]]"`,            // Wiki形式リンク
+            `"${docPath}"`,                 // パス参照
+        ];
+
+        const allBacklinks = [];
+        
+        for (const query of searchQueries) {
+            try {
+                const response = await this.apiRequest("/search/fullTextSearchBlock", {
+                    query: query,
+                    types: {
+                        paragraph: true,
+                        heading: true,
+                        list: true,
+                        listItem: true,
+                        blockquote: true,
+                        mathBlock: true,
+                        table: true,
+                        codeBlock: true
+                    }
+                });
+
+                if (response.code === 0 && response.data.blocks) {
+                    // 自己参照を除外
+                    const filteredBlocks = response.data.blocks.filter(block => 
+                        block.root_id !== docId
+                    );
+                    allBacklinks.push(...filteredBlocks);
+                }
+            } catch (error) {
+                console.warn(`Failed to search with query ${query}:`, error);
+            }
+        }
+
+        // 重複を除去
+        const uniqueBacklinks = this.deduplicateBacklinks(allBacklinks);
+        
+        // ドキュメントごとにグループ化
+        return this.groupBacklinksByDocument(uniqueBacklinks);
+    }
+
+    private async findMutualLinks(docId: string): Promise<any[]> {
+        // 現在のドキュメントが参照している他のドキュメントを検索
+        const outgoingResponse = await this.apiRequest("/search/fullTextSearchBlock", {
+            query: `root_id:${docId}`,
+            types: {
+                paragraph: true,
+                heading: true,
+                list: true,
+                listItem: true,
+                blockquote: true
+            }
+        });
+
+        if (outgoingResponse.code !== 0) return [];
+
+        const mutualLinks = [];
+        const outgoingBlocks = outgoingResponse.data.blocks || [];
+
+        for (const block of outgoingBlocks) {
+            // ブロック参照パターンを検索
+            const refMatches = block.content.match(/\(\(([^)]+)\)\)/g);
+            if (refMatches) {
+                for (const match of refMatches) {
+                    const refId = match.slice(2, -2);
+                    
+                    // 参照先ドキュメントからのバックリンクがあるかチェック
+                    const hasBacklink = await this.checkBacklinkExists(refId, docId);
+                    if (hasBacklink) {
+                        const refInfo = await this.apiRequest("/block/getBlockInfo", {
+                            id: refId
+                        });
+                        
+                        if (refInfo.code === 0) {
+                            mutualLinks.push({
+                                id: refId,
+                                title: refInfo.data.name,
+                                path: refInfo.data.path,
+                                type: 'mutual'
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+        return mutualLinks;
+    }
+
+    private async findPotentialLinks(currentDoc: any): Promise<any[]> {
+        // 現在のドキュメントの内容を取得
+        const docContent = await this.apiRequest("/export/exportMdContent", {
+            id: currentDoc.id
+        });
+
+        if (docContent.code !== 0) return [];
+
+        const content = docContent.data.content;
+        const words = this.extractKeywords(content);
+        
+        const potentialLinks = [];
+
+        // キーワードベースで関連ドキュメントを検索
+        for (const keyword of words.slice(0, 10)) { // 上位10キーワード
+            try {
+                const response = await this.apiRequest("/search/fullTextSearchBlock", {
+                    query: keyword,
+                    types: { paragraph: true, heading: true }
+                });
+
+                if (response.code === 0 && response.data.blocks) {
+                    const relatedBlocks = response.data.blocks.filter(block => 
+                        block.root_id !== currentDoc.id &&
+                        !this.hasExistingLink(content, block.root_id)
+                    );
+
+                    for (const block of relatedBlocks.slice(0, 3)) {
+                        potentialLinks.push({
+                            id: block.root_id,
+                            title: block.name,
+                            path: block.hPath,
+                            keyword: keyword,
+                            relevance: this.calculateRelevance(content, block.content),
+                            type: 'potential'
+                        });
+                    }
+                }
+            } catch (error) {
+                console.warn(`Failed to search potential links for keyword ${keyword}:`, error);
+            }
+        }
+
+        // 関連度でソート
+        return potentialLinks
+            .sort((a, b) => b.relevance - a.relevance)
+            .slice(0, 5);
+    }
+
+    private renderBacklinkResults(data: any): string {
+        const { backlinks, mutualLinks, potentialLinks, currentDoc } = data;
+
+        return `
+            <div class="backlink-results">
+                <div class="backlink-section">
+                    <h3 class="backlink-section-title">
+                        <svg><use xlink:href="#iconLink"></use></svg>
+                        バックリンク (${backlinks.length})
+                    </h3>
+                    <div class="backlink-list">
+                        ${backlinks.length > 0 ? 
+                            backlinks.map(doc => this.renderBacklinkItem(doc, 'backlink')).join('') :
+                            '<div class="backlink-empty">バックリンクはありません</div>'
+                        }
+                    </div>
+                </div>
+
+                <div class="backlink-section">
+                    <h3 class="backlink-section-title">
+                        <svg><use xlink:href="#iconExchange"></use></svg>
+                        相互リンク (${mutualLinks.length})
+                    </h3>
+                    <div class="backlink-list">
+                        ${mutualLinks.length > 0 ? 
+                            mutualLinks.map(link => this.renderBacklinkItem(link, 'mutual')).join('') :
+                            '<div class="backlink-empty">相互リンクはありません</div>'
+                        }
+                    </div>
+                </div>
+
+                <div class="backlink-section">
+                    <h3 class="backlink-section-title">
+                        <svg><use xlink:href="#iconLight"></use></svg>
+                        関連可能性 (${potentialLinks.length})
+                    </h3>
+                    <div class="backlink-list">
+                        ${potentialLinks.length > 0 ? 
+                            potentialLinks.map(link => this.renderBacklinkItem(link, 'potential')).join('') :
+                            '<div class="backlink-empty">関連ドキュメントが見つかりません</div>'
+                        }
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    private renderBacklinkItem(item: any, type: string): string {
+        const typeClass = `backlink-item--${type}`;
+        const typeIcon = {
+            'backlink': 'iconLink',
+            'mutual': 'iconExchange', 
+            'potential': 'iconLight'
+        }[type];
+
+        return `
+            <div class="backlink-item ${typeClass}" data-id="${item.id}" data-type="${type}">
+                <div class="backlink-item-header">
+                    <svg class="backlink-type-icon"><use xlink:href="#${typeIcon}"></use></svg>
+                    <span class="backlink-title">${item.title || item.name || 'Untitled'}</span>
+                    <div class="backlink-actions">
+                        <button class="backlink-action" data-action="open" title="開く">
+                            <svg><use xlink:href="#iconFile"></use></svg>
+                        </button>
+                        ${type === 'potential' ? `
+                            <button class="backlink-action" data-action="link" title="リンクを作成">
+                                <svg><use xlink:href="#iconAdd"></use></svg>
+                            </button>
+                        ` : ''}
+                        <button class="backlink-action" data-action="preview" title="プレビュー">
+                            <svg><use xlink:href="#iconEye"></use></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="backlink-path">${item.path || item.hPath}</div>
+                ${item.keyword ? `<div class="backlink-keyword">キーワード: ${item.keyword}</div>` : ''}
+                ${item.relevance ? `<div class="backlink-relevance">関連度: ${Math.round(item.relevance * 100)}%</div>` : ''}
+                ${item.blocks ? `
+                    <div class="backlink-blocks">
+                        ${item.blocks.slice(0, 3).map(block => `
+                            <div class="backlink-block" data-block-id="${block.id}">
+                                <div class="backlink-block-content">${this.truncateContent(block.content)}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+
+    private bindBacklinkEvents(container: HTMLElement) {
+        container.addEventListener("click", async (e) => {
+            const target = e.target as HTMLElement;
+            const action = target.closest(".backlink-action")?.getAttribute("data-action");
+            const item = target.closest(".backlink-item");
+            
+            if (!action || !item) return;
+
+            const docId = item.getAttribute("data-id");
+            const type = item.getAttribute("data-type");
+
+            switch (action) {
+                case "open":
+                    await this.openDocument(docId);
+                    break;
+                case "preview":
+                    await this.showDocumentPreview(docId);
+                    break;
+                case "link":
+                    if (type === 'potential') {
+                        await this.createLinkToDocument(docId);
+                    }
+                    break;
+            }
+        });
+
+        // ブロッククリックで該当ブロックにジャンプ
+        container.addEventListener("click", async (e) => {
+            const blockElement = e.target.closest(".backlink-block");
+            if (blockElement) {
+                const blockId = blockElement.getAttribute("data-block-id");
+                await this.jumpToBlock(blockId);
+            }
+        });
+    }
+
+    private async showBacklinkGraph() {
+        const currentDoc = this.app.workspace.activeLeaf?.doc;
+        if (!currentDoc) return;
+
+        // グラフビューダイアログを作成
+        const dialog = new Dialog({
+            title: "Backlink Graph",
+            content: `
+                <div class="graph-container">
+                    <div class="graph-toolbar">
+                        <button class="b3-button b3-button--small" id="graphRefresh">更新</button>
+                        <button class="b3-button b3-button--small" id="graphSettings">設定</button>
+                        <select class="b3-select" id="graphDepth">
+                            <option value="1">1レベル</option>
+                            <option value="2" selected>2レベル</option>
+                            <option value="3">3レベル</option>
+                        </select>
+                    </div>
+                    <div class="graph-canvas" id="graphCanvas">
+                        <canvas width="800" height="600"></canvas>
+                    </div>
+                    <div class="graph-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #3b82f6;"></div>
+                            <span>現在のドキュメント</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #10b981;"></div>
+                            <span>バックリンク</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #f59e0b;"></div>
+                            <span>相互リンク</span>
+                        </div>
+                    </div>
+                </div>
+            `,
+            width: 900,
+            height: 700
+        });
+
+        // グラフを描画
+        await this.renderBacklinkGraph(dialog.element, currentDoc);
+    }
+
+    private async renderBacklinkGraph(container: HTMLElement, currentDoc: any) {
+        const canvas = container.querySelector("canvas") as HTMLCanvasElement;
+        const ctx = canvas.getContext("2d");
+        
+        if (!ctx) return;
+
+        // グラフデータを構築
+        const graphData = await this.buildGraphData(currentDoc.id, 2);
+        
+        // Force-directed graph layoutを実装
+        this.drawGraph(ctx, graphData, canvas.width, canvas.height);
+    }
+
+    // ユーティリティメソッド
+    private deduplicateBacklinks(backlinks: any[]): any[] {
+        const seen = new Set();
+        return backlinks.filter(link => {
+            const key = `${link.root_id}-${link.id}`;
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+        });
+    }
+
+    private groupBacklinksByDocument(backlinks: any[]): any[] {
+        const grouped = new Map();
+        
+        backlinks.forEach(link => {
+            const docId = link.root_id;
+            if (!grouped.has(docId)) {
+                grouped.set(docId, {
+                    id: docId,
+                    title: link.name,
+                    path: link.hPath,
+                    blocks: []
+                });
+            }
+            grouped.get(docId).blocks.push(link);
+        });
+
+        return Array.from(grouped.values());
+    }
+
+    private extractKeywords(content: string): string[] {
+        // 簡単なキーワード抽出（実際はより高度なNLP処理を推奨）
+        const words = content
+            .toLowerCase()
+            .replace(/[^\w\s]/g, ' ')
+            .split(/\s+/)
+            .filter(word => word.length > 3)
+            .filter(word => !['this', 'that', 'with', 'from', 'have', 'they', 'been', 'said'].includes(word));
+
+        const frequency = {};
+        words.forEach(word => {
+            frequency[word] = (frequency[word] || 0) + 1;
+        });
+
+        return Object.keys(frequency)
+            .sort((a, b) => frequency[b] - frequency[a])
+            .slice(0, 20);
+    }
+
+    private calculateRelevance(content1: string, content2: string): number {
+        const words1 = new Set(this.extractKeywords(content1));
+        const words2 = new Set(this.extractKeywords(content2));
+        
+        const intersection = new Set([...words1].filter(x => words2.has(x)));
+        const union = new Set([...words1, ...words2]);
+        
+        return intersection.size / union.size; // Jaccard similarity
+    }
+
+    private hasExistingLink(content: string, targetId: string): boolean {
+        return content.includes(`((${targetId}))`) || 
+               content.includes(`[${targetId}]`);
+    }
+
+    private truncateContent(content: string, maxLength: number = 100): string {
+        if (content.length <= maxLength) return content;
+        return content.substring(0, maxLength) + '...';
+    }
+
+    // ... 他のヘルパーメソッドは省略
+}
+```
+
+この実装例では、以下の機能を提供しています：
+
+1. **バックリンク検出機能**
+   - ブロック参照 `((block-id))` の検出
+   - マークダウンリンク `[title](path)` の検出  
+   - Wiki形式リンク `[[title]]` の検出
+   - パス参照の検出
+
+2. **相互リンク分析**
+   - 双方向参照の検出
+   - リンクの関係性の可視化
+   - 相互参照の強度測定
+
+3. **潜在的リンク提案**
+   - キーワードベースの関連ドキュメント検索
+   - 関連度の算出（Jaccard similarity）
+   - 未リンクの関連性検出
+
+4. **バックリンクグラフ**
+   - ドキュメント間の関係を視覚化
+   - Force-directed graphレイアウト
+   - インタラクティブなナビゲーション
+
+5. **UI機能**
+   - 専用のバックリンクパネル
+   - リアルタイム検索とフィルタリング
+   - ワンクリックナビゲーション
+   - プレビュー機能
+
+このプラグインにより、知識ベースの構造を把握し、情報間のつながりを効果的に管理できます。
+
+---
 
 3. **多言語対応**
    - JavaScript/TypeScript、Python、Go での実装例
