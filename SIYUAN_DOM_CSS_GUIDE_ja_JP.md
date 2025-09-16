@@ -864,24 +864,21 @@ themes/
 }
 
 /* カスタムコンポーネントスタイル */
-.protyle-wysiwyg {
-    .h1 {
-        color: var(--custom-primary);
-        border-bottom: 2px solid var(--custom-primary);
-        padding-bottom: 8px;
-    }
-    
-    .h2 {
-        color: var(--custom-secondary);
-    }
-    
-    .bq {
-        background-color: var(--b3-theme-surface);
-        border-left-color: var(--custom-accent);
-        border-radius: 0 var(--b3-border-radius) var(--b3-border-radius) 0;
-    }
+.protyle-wysiwyg .h1 {
+    color: var(--custom-primary);
+    border-bottom: 2px solid var(--custom-primary);
+    padding-bottom: 8px;
 }
 
+.protyle-wysiwyg .h2 {
+    color: var(--custom-secondary);
+}
+
+.protyle-wysiwyg .bq {
+    background-color: var(--b3-theme-surface);
+    border-left-color: var(--custom-accent);
+    border-radius: 0 var(--b3-border-radius) var(--b3-border-radius) 0;
+}
 /* ツールバーのカスタマイズ */
 .toolbar {
     background: linear-gradient(90deg, var(--b3-theme-surface), var(--b3-theme-background));
