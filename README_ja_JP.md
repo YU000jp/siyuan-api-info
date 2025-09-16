@@ -23,6 +23,21 @@
 
 ## APIドキュメント
 
+### 用途別ドキュメント（推奨）
+
+* **[初心者向けAPIガイド](API_BEGINNERS_ja_JP.md)** - APIを初めて使用する方向け
+* **[プラグイン開発者向けAPIガイド](API_PLUGIN_DEVELOPERS_ja_JP.md)** - プラグイン開発に必要なAPI
+* **[高度なAPIパターン](API_ADVANCED_PATTERNS_ja_JP.md)** - 複雑な操作やベストプラクティス
+* **[カテゴリ別APIリファレンス](API_REFERENCE_BY_CATEGORY_ja_JP.md)** - 機能別に整理されたAPIリスト
+* **[未記載エンドポイント補完](API_MISSING_ENDPOINTS_ja_JP.md)** - 追加のAPIエンドポイント
+
+## UI・テーマ開発
+
+* **[SiYuan DOM構造・CSS解説ガイド](SIYUAN_DOM_CSS_GUIDE_ja_JP.md)** - プラグイン・テーマ制作者向けUI開発ガイド
+
+### 完全なAPIリファレンス
+
+* [APIドキュメント (日本語)](API_ja_JP.md) - 全エンドポイントの詳細
 * [APIドキュメント (English)](API.md)
 * [APIドキュメント (中文)](API_zh_CN.md)
 
