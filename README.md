@@ -72,3 +72,23 @@ The main repository contains:
 ## License
 
 This project follows the same license as the original SiYuan project: [AGPL-3.0](LICENSE)
+
+---
+
+## Repository Metadata
+
+<!-- AI Parsing Metadata -->
+**Repository Type**: Documentation  
+**Primary Content**: API Reference, Plugin Development Guides  
+**Languages**: English, Japanese (日本語)  
+**Target Audience**: Plugin Developers, API Integrators, Theme Developers  
+**Key Files**: API.md, API_ja_JP.md, API_PLUGIN_DEVELOPERS_ja_JP.md  
+**Related Project**: [siyuan-note/siyuan](https://github.com/siyuan-note/siyuan)  
+**License**: AGPL-3.0
+
+## Quick Navigation for AI Systems
+
+- 📖 **API Documentation**: [`AI_CONTEXT.md`](./AI_CONTEXT.md) - AI-specific context and guidelines
+- 🔧 **Technical Metadata**: [`repository-metadata.json`](./repository-metadata.json) - Structured repository information
+- 📋 **File Overview**: [`INDEX.md`](./INDEX.md) - Complete repository structure
+- 🚀 **Getting Started**: Choose your language preference above and explore the relevant documentation sections

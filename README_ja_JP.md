@@ -72,3 +72,23 @@
 ## ライセンス
 
 このプロジェクトは、オリジナルのSiYuanプロジェクトと同じライセンスに従います: [AGPL-3.0](LICENSE)
+
+---
+
+## リポジトリメタデータ
+
+<!-- AI解析用メタデータ -->
+**リポジトリタイプ**: ドキュメント  
+**主要コンテンツ**: APIリファレンス、プラグイン開発ガイド  
+**言語**: 英語、日本語  
+**対象ユーザー**: プラグイン開発者、API統合者、テーマ開発者  
+**重要ファイル**: API.md, API_ja_JP.md, API_PLUGIN_DEVELOPERS_ja_JP.md  
+**関連プロジェクト**: [siyuan-note/siyuan](https://github.com/siyuan-note/siyuan)  
+**ライセンス**: AGPL-3.0
+
+## AIシステム向けクイックナビゲーション
+
+- 📖 **APIドキュメント**: [`AI_CONTEXT.md`](./AI_CONTEXT.md) - AI向けコンテキストとガイドライン
+- 🔧 **技術メタデータ**: [`repository-metadata.json`](./repository-metadata.json) - 構造化されたリポジトリ情報
+- 📋 **ファイル概要**: [`INDEX.md`](./INDEX.md) - 完全なリポジトリ構造
+- 🚀 **始めに**: 上記の言語設定を選択し、関連するドキュメントセクションを探索してください

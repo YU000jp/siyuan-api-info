@@ -1,1 +1,31 @@
 app/stage/protyle/** linguist-vendored
+
+# AI and Documentation Language Detection
+*.md linguist-detectable
+*.md linguist-documentation
+
+# Japanese Documentation Files
+*_ja_JP.md linguist-language=Markdown
+README_ja_JP.md linguist-language=Markdown
+API_ja_JP.md linguist-language=Markdown
+
+# API Documentation Files (High Priority for AI)
+API.md linguist-documentation=false
+API_ja_JP.md linguist-documentation=false
+API_PLUGIN_DEVELOPERS.md linguist-documentation=false
+API_PLUGIN_DEVELOPERS_ja_JP.md linguist-documentation=false
+
+# Repository Metadata Files
+AI_CONTEXT.md linguist-documentation=false
+repository-metadata.json linguist-detectable
+INDEX.md linguist-documentation=false
+
+# Configuration and Build Files
+*.json linguist-detectable
+*.yml linguist-detectable
+*.yaml linguist-detectable
+Dockerfile linguist-detectable
+
+# Ensure these files are not treated as vendored
+*.md -linguist-vendored
+*.json -linguist-vendored

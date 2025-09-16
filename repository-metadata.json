@@ -1,0 +1,147 @@
+{
+  "repository": {
+    "name": "siyuan-api-info",
+    "description": "Comprehensive SiYuan API documentation and plugin development resources",
+    "type": "documentation",
+    "purpose": "API reference and plugin development guidance for SiYuan knowledge management system",
+    "target_audience": [
+      "plugin developers",
+      "api integrators",
+      "theme developers",
+      "ai systems"
+    ]
+  },
+  "content": {
+    "primary_language": "markdown",
+    "supported_languages": ["english", "japanese"],
+    "total_size_kb": 650,
+    "file_count": 25,
+    "documentation_categories": [
+      "api_reference",
+      "plugin_development", 
+      "theme_development",
+      "best_practices",
+      "community_showcase"
+    ]
+  },
+  "api_information": {
+    "base_url": "http://localhost:6806/api/",
+    "authentication": "token_based",
+    "data_format": "json",
+    "primary_method": "POST",
+    "endpoint_count": 40,
+    "categories": [
+      "notebook_management",
+      "document_operations", 
+      "block_operations",
+      "asset_management",
+      "search_query",
+      "synchronization",
+      "file_system",
+      "templates"
+    ]
+  },
+  "documentation_files": {
+    "high_priority": [
+      {
+        "file": "API.md",
+        "language": "english",
+        "size_kb": 60,
+        "description": "Complete REST API reference with examples",
+        "content_type": "api_reference"
+      },
+      {
+        "file": "API_ja_JP.md", 
+        "language": "japanese",
+        "size_kb": 87,
+        "description": "Complete Japanese API reference",
+        "content_type": "api_reference"
+      },
+      {
+        "file": "API_PLUGIN_DEVELOPERS.md",
+        "language": "english", 
+        "size_kb": 37,
+        "description": "Complete plugin development guide",
+        "content_type": "plugin_development"
+      },
+      {
+        "file": "API_PLUGIN_DEVELOPERS_ja_JP.md",
+        "language": "japanese",
+        "size_kb": 94,
+        "description": "Japanese plugin development guide",
+        "content_type": "plugin_development"
+      }
+    ],
+    "medium_priority": [
+      {
+        "file": "API_BEGINNERS.md",
+        "language": "english",
+        "size_kb": 12,
+        "description": "Beginner-friendly API introduction",
+        "content_type": "tutorial"
+      },
+      {
+        "file": "API_ADVANCED_PATTERNS.md",
+        "language": "english", 
+        "size_kb": 35,
+        "description": "Advanced API usage patterns",
+        "content_type": "advanced_guide"
+      },
+      {
+        "file": "PLUGIN_BEST_PRACTICES_ja_JP.md",
+        "language": "japanese",
+        "size_kb": 40,
+        "description": "Comprehensive plugin development guidelines",
+        "content_type": "best_practices"
+      },
+      {
+        "file": "PLUGIN_SHOWCASE_ja_JP.md",
+        "language": "japanese",
+        "size_kb": 56,
+        "description": "Community plugin examples and patterns",
+        "content_type": "showcase"
+      }
+    ],
+    "specialized": [
+      {
+        "file": "SIYUAN_DOM_CSS_GUIDE_ja_JP.md",
+        "language": "japanese",
+        "size_kb": 36,
+        "description": "UI development and theming guide",
+        "content_type": "theme_development"
+      },
+      {
+        "file": "INDEX.md",
+        "language": "english",
+        "size_kb": 9,
+        "description": "Repository structure and overview",
+        "content_type": "navigation"
+      }
+    ]
+  },
+  "ai_usage_guidelines": {
+    "api_questions": "Direct to API.md or API_ja_JP.md for comprehensive endpoint documentation",
+    "plugin_development": "Reference API_PLUGIN_DEVELOPERS.md and PLUGIN_BEST_PRACTICES_ja_JP.md",
+    "code_examples": "Use patterns from showcase files and advanced patterns documentation",
+    "beginners": "Start with API_BEGINNERS.md for gentler introduction",
+    "ui_theme_work": "Reference SIYUAN_DOM_CSS_GUIDE_ja_JP.md",
+    "navigation": "Use INDEX.md for repository overview and structure"
+  },
+  "related_resources": {
+    "main_repository": "https://github.com/siyuan-note/siyuan",
+    "plugin_api": "https://github.com/siyuan-note/petal", 
+    "plugin_template": "https://github.com/siyuan-note/plugin-sample",
+    "modern_template": "https://github.com/siyuan-note/plugin-sample-vite-svelte",
+    "marketplace": "https://github.com/siyuan-note/bazaar",
+    "official_docs": "https://b3log.org/siyuan/en/"
+  },
+  "technical_stack": {
+    "frontend": ["typescript", "javascript", "electron", "scss"],
+    "backend": ["go", "sqlite", "rest_api", "websocket"],
+    "mobile": ["ios", "android", "harmonyos"],
+    "deployment": ["docker", "electron_builder"]
+  },
+  "license": "AGPL-3.0",
+  "last_updated": "2024-09-16",
+  "version": "1.0.0"
+}
