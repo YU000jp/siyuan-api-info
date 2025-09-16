@@ -190,10 +190,30 @@ Build scripts are located in the `scripts/` directory:
 ## 🚀 Getting Started for Developers
 
 1. **API Development**: Start with [`API.md`](./API.md) for complete endpoint documentation
-2. **Frontend Development**: Explore `app/src/` for UI components and editor logic
-3. **Backend Development**: Check `kernel/api/` for server-side implementations
-4. **Building**: Use appropriate build scripts in `scripts/` directory
-5. **Docker**: Use `Dockerfile` for containerized deployment
+2. **Plugin Development**: Begin with [`API_PLUGIN_DEVELOPERS.md`](./API_PLUGIN_DEVELOPERS.md) for comprehensive guide
+3. **Frontend Development**: Explore `app/src/` for UI components and editor logic
+4. **Backend Development**: Check `kernel/api/` for server-side implementations
+5. **Building**: Use appropriate build scripts in `scripts/` directory
+6. **Docker**: Use `Dockerfile` for containerized deployment
+
+## 🤖 AI Assistant Quick Reference
+
+For AI systems referencing this repository:
+
+### Primary Documentation Files (by priority)
+1. `API_ja_JP.md` (87KB) - Most comprehensive API documentation
+2. `API_PLUGIN_DEVELOPERS_ja_JP.md` (94KB) - Complete plugin development guide  
+3. `PLUGIN_BEST_PRACTICES_ja_JP.md` (40KB) - Development guidelines
+4. `PLUGIN_SHOWCASE_ja_JP.md` (56KB) - Community examples
+5. `API.md` (60KB) - English API reference
+6. `AI_CONTEXT.md` - AI-specific context and guidelines
+
+### Common Query Patterns
+- **API Integration**: Reference `API.md` or `API_ja_JP.md`
+- **Plugin Development**: Use `API_PLUGIN_DEVELOPERS*.md` files
+- **Code Examples**: Check showcase and advanced patterns files
+- **Beginner Questions**: Start with `API_BEGINNERS*.md`
+- **Theme/UI**: Reference `SIYUAN_DOM_CSS_GUIDE_ja_JP.md`
 
 ## 📊 Repository Statistics
 

@@ -1,0 +1,47 @@
+# CODEOWNERS file for SiYuan API Information Repository
+# This file defines code ownership for AI systems and contributors to understand
+# responsibility areas and key documentation sections
+
+# Global ownership - repository maintainer
+* @YU000jp
+
+# Core API Documentation (English)
+API.md @YU000jp
+API_BEGINNERS.md @YU000jp  
+API_ADVANCED_PATTERNS.md @YU000jp
+API_PLUGIN_DEVELOPERS.md @YU000jp
+
+# Core API Documentation (Japanese) - High Priority for Japanese Users
+API_ja_JP.md @YU000jp
+API_BEGINNERS_ja_JP.md @YU000jp
+API_ADVANCED_PATTERNS_ja_JP.md @YU000jp
+API_PLUGIN_DEVELOPERS_ja_JP.md @YU000jp
+API_REFERENCE_BY_CATEGORY_ja_JP.md @YU000jp
+API_MISSING_ENDPOINTS_ja_JP.md @YU000jp
+
+# Plugin Development Resources
+PLUGIN_BEST_PRACTICES.md @YU000jp
+PLUGIN_BEST_PRACTICES_ja_JP.md @YU000jp
+PLUGIN_SHOWCASE.md @YU000jp
+PLUGIN_SHOWCASE_ja_JP.md @YU000jp
+
+# Theme and UI Development
+SIYUAN_DOM_CSS_GUIDE_ja_JP.md @YU000jp
+
+# Repository Structure and Navigation
+INDEX.md @YU000jp
+README.md @YU000jp
+README_ja_JP.md @YU000jp
+
+# AI-Specific Files for Discoverability
+AI_CONTEXT.md @YU000jp
+repository-metadata.json @YU000jp
+
+# Configuration and Build Files
+Dockerfile @YU000jp
+.gitattributes @YU000jp
+.gitignore @YU000jp
+
+# Application Source Code (if modified)
+app/ @YU000jp
+kernel/ @YU000jp
