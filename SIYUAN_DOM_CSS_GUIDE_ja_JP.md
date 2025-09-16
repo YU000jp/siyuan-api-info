@@ -1257,20 +1257,17 @@ export default class MyPlugin extends Plugin {
 
 ```css
 /* 開発時のデバッグ用スタイル */
-[data-debug="true"] {
-    * {
-        outline: 1px solid red !important;
-    }
-    
-    .layout {
-        background-color: rgba(255, 0, 0, 0.1) !important;
-    }
-    
-    .protyle-wysiwyg > div {
-        border: 1px dashed blue !important;
-    }
+[data-debug="true"] > * {
+    outline: 1px solid red !important;
 }
 
+[data-debug="true"] .layout {
+    background-color: rgba(255, 0, 0, 0.1) !important;
+}
+
+[data-debug="true"] .protyle-wysiwyg > div {
+    border: 1px dashed blue !important;
+}
 /* CSS Grid/Flexboxのデバッグ */
 .debug-grid {
     background-image: 
