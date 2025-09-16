@@ -50,19 +50,46 @@ Key subdirectories:
 
 ## 📖 Documentation Files
 
-### API Documentation
+This repository is organized into four main categories:
+
+### 1. SiYuan Application
+General application information and main repository links.
+
+### 2. SiYuan API Documentation
 
 | File | Language | Description |
 |------|----------|-------------|
 | [`API.md`](./API.md) | English | Complete REST API reference with examples |
-| [`API_zh_CN.md`](./API_zh_CN.md) | Chinese | Chinese version of API documentation |
+| [`API_ja_JP.md`](./API_ja_JP.md) | Japanese | Japanese version of API documentation |
+| [`API_BEGINNERS.md`](./API_BEGINNERS.md) | English | Beginner's guide to SiYuan API |
+| [`API_BEGINNERS_ja_JP.md`](./API_BEGINNERS_ja_JP.md) | Japanese | Japanese beginner's guide |
+| [`API_ADVANCED_PATTERNS.md`](./API_ADVANCED_PATTERNS.md) | English | Advanced API usage patterns |
+| [`API_ADVANCED_PATTERNS_ja_JP.md`](./API_ADVANCED_PATTERNS_ja_JP.md) | Japanese | Advanced patterns in Japanese |
+| [`API_REFERENCE_BY_CATEGORY_ja_JP.md`](./API_REFERENCE_BY_CATEGORY_ja_JP.md) | Japanese | APIs organized by functionality |
+| [`API_MISSING_ENDPOINTS_ja_JP.md`](./API_MISSING_ENDPOINTS_ja_JP.md) | Japanese | Additional API endpoints |
+
+### 3. SiYuan Plugin Development
+
+| File | Language | Description |
+|------|----------|-------------|
+| [`API_PLUGIN_DEVELOPERS.md`](./API_PLUGIN_DEVELOPERS.md) | English | Complete plugin development guide |
+| [`API_PLUGIN_DEVELOPERS_ja_JP.md`](./API_PLUGIN_DEVELOPERS_ja_JP.md) | Japanese | Plugin development guide in Japanese |
+| [`PLUGIN_BEST_PRACTICES.md`](./PLUGIN_BEST_PRACTICES.md) | English | Plugin development best practices overview |
+| [`PLUGIN_BEST_PRACTICES_ja_JP.md`](./PLUGIN_BEST_PRACTICES_ja_JP.md) | Japanese | Complete plugin development best practices |
+| [`PLUGIN_SHOWCASE.md`](./PLUGIN_SHOWCASE.md) | English | Community plugin showcase overview |
+| [`PLUGIN_SHOWCASE_ja_JP.md`](./PLUGIN_SHOWCASE_ja_JP.md) | Japanese | Complete showcase of community plugins |
+
+### 4. SiYuan Theme Development
+
+| File | Language | Description |
+|------|----------|-------------|
+| [`SIYUAN_DOM_CSS_GUIDE_ja_JP.md`](./SIYUAN_DOM_CSS_GUIDE_ja_JP.md) | Japanese | Complete UI and theme development guide |
 
 ### README Files
 
 | File | Language | Target Audience |
 |------|----------|-----------------|
 | [`README.md`](./README.md) | English | General users and developers |
-| [`README_zh_CN.md`](./README_zh_CN.md) | Chinese | Chinese-speaking users |
 | [`README_ja_JP.md`](./README_ja_JP.md) | Japanese | Japanese-speaking users |
 
 ### Other Documentation

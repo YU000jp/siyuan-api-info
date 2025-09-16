@@ -4,7 +4,6 @@ SiYuanノートアプリケーションAPIの包括的ガイドです。このAP
 
 **言語オプション:**
 - [English](API.md)
-- [中文 (Chinese)](API_zh_CN.md)
 
 ## 📚 用途別ガイド（推奨）
 
