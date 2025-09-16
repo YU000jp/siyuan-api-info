@@ -31,6 +31,10 @@
 * **[カテゴリ別APIリファレンス](API_REFERENCE_BY_CATEGORY_ja_JP.md)** - 機能別に整理されたAPIリスト
 * **[未記載エンドポイント補完](API_MISSING_ENDPOINTS_ja_JP.md)** - 追加のAPIエンドポイント
 
+## UI・テーマ開発
+
+* **[SiYuan DOM構造・CSS解説ガイド](SIYUAN_DOM_CSS_GUIDE_ja_JP.md)** - プラグイン・テーマ制作者向けUI開発ガイド
+
 ### 完全なAPIリファレンス
 
 * [APIドキュメント (日本語)](API_ja_JP.md) - 全エンドポイントの詳細
