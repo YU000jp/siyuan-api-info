@@ -11,7 +11,6 @@ SiYuanプラグインを開発する際に必要なAPIエンドポイント、�
 
 **関連ドキュメント**:
 - [プラグイン開発ベストプラクティス](PLUGIN_BEST_PRACTICES_ja_JP.md) - 開発手法とコード品質
-- [高度なプラグインパターン](ADVANCED_PLUGIN_PATTERNS_ja_JP.md) - 実践的なパターン集
 - [プラグインショーケース](PLUGIN_SHOWCASE_ja_JP.md) - 優秀なプラグイン事例
 - [完全なAPIリファレンス](API_ja_JP.md) - 全てのAPIエンドポイント
 - [初心者向けAPIガイド](API_BEGINNERS_ja_JP.md) - API使用の基本
@@ -3202,7 +3201,6 @@ for (let i = 0; i < blockIds.length; i += batchSize) {
 ### 開発リソース
 
 - **[プラグイン開発ベストプラクティス](PLUGIN_BEST_PRACTICES_ja_JP.md)** - 高品質なプラグイン開発のガイドライン
-- **[高度なプラグインパターン](ADVANCED_PLUGIN_PATTERNS_ja_JP.md)** - 実践的なパターン集
 - **[プラグインショーケース](PLUGIN_SHOWCASE_ja_JP.md)** - 優秀なプラグイン事例
 - **[完全なAPIリファレンス](API_ja_JP.md)** - 全エンドポイントの詳細
 

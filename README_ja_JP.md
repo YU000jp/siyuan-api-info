@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-<a href="README.md">English</a> | <a href="README_zh_CN.md">中文</a> | <a href="README_ja_JP.md">日本語</a>
+<a href="README.md">English</a> | <a href="README_ja_JP.md">日本語</a>
 </p>
 
 ---
@@ -21,44 +21,42 @@
 
 **一般的なSiYuanの使用方法、インストール、ドキュメントについては、メインリポジトリをご覧ください: [siyuan-note/siyuan](https://github.com/siyuan-note/siyuan)**
 
-## 📚 リポジトリインデックス
+## 📚 ドキュメントカテゴリ
 
-**開発者・AIシステム向け**: リポジトリの構造、APIエンドポイント、開発情報の包括的な概要については、[INDEX.md](./INDEX.md)を参照してください。
+このリポジトリは、ご要望に応じて4つの主要エリアに整理されています：
 
-## APIドキュメント
+### 1. 🚀 SiYuanアプリケーション
+一般的なSiYuanの使用方法、インストール、ドキュメント：
+- **[SiYuanメインリポジトリ](https://github.com/siyuan-note/siyuan)** - 完全なアプリケーションドキュメント
+- **[INDEX.md](./INDEX.md)** - リポジトリ構造と概要
 
-### 用途別ドキュメント（推奨）
+### 2. 🔧 SiYuan API
+開発者・統合者向けAPIドキュメント：
+- **[初心者向けAPIガイド](API_BEGINNERS.md)** - SiYuan APIを初めて使用する方向け
+- **[高度なAPIパターン](API_ADVANCED_PATTERNS.md)** - 複雑な操作やベストプラクティス
+- **[完全なAPIリファレンス (English)](API.md)** - 全APIエンドポイント
+- **[完全なAPIリファレンス (日本語)](API_ja_JP.md)** - 日本語版
+- **[カテゴリ別APIリファレンス](API_REFERENCE_BY_CATEGORY_ja_JP.md)** - 機能別に整理
+- **[未記載エンドポイント補完](API_MISSING_ENDPOINTS_ja_JP.md)** - 追加のエンドポイント
 
-* **[初心者向けAPIガイド](API_BEGINNERS_ja_JP.md)** - APIを初めて使用する方向け
-* **[プラグイン開発者向けAPIガイド](API_PLUGIN_DEVELOPERS_ja_JP.md)** - プラグイン開発に必要なAPI
-* **[高度なAPIパターン](API_ADVANCED_PATTERNS_ja_JP.md)** - 複雑な操作やベストプラクティス
-* **[カテゴリ別APIリファレンス](API_REFERENCE_BY_CATEGORY_ja_JP.md)** - 機能別に整理されたAPIリスト
-* **[未記載エンドポイント補完](API_MISSING_ENDPOINTS_ja_JP.md)** - 追加のAPIエンドポイント
+### 3. 🔌 SiYuanプラグイン
+プラグイン開発リソースとガイド：
+- **[プラグイン開発者向けAPIガイド](API_PLUGIN_DEVELOPERS.md)** - 完全なプラグイン開発ガイド
+- **[プラグイン開発者向けAPIガイド (日本語)](API_PLUGIN_DEVELOPERS_ja_JP.md)** - 日本語版
+- **[プラグインベストプラクティス](PLUGIN_BEST_PRACTICES.md)** - 開発ガイドライン概要
+- **[プラグインベストプラクティス (日本語)](PLUGIN_BEST_PRACTICES_ja_JP.md)** - 完全な開発ガイドライン
+- **[プラグインショーケース](PLUGIN_SHOWCASE.md)** - コミュニティプラグインの事例概要
+- **[プラグインショーケース (日本語)](PLUGIN_SHOWCASE_ja_JP.md)** - 完全なコミュニティプラグイン事例
 
-## UI・テーマ開発
-
-* **[SiYuan DOM構造・CSS解説ガイド](SIYUAN_DOM_CSS_GUIDE_ja_JP.md)** - プラグイン・テーマ制作者向けUI開発ガイド
-
-### 完全なAPIリファレンス
-
-* [APIドキュメント (日本語)](API_ja_JP.md) - 全エンドポイントの詳細
-* [APIドキュメント (English)](API.md)
-* [APIドキュメント (中文)](API_zh_CN.md)
-
-## プラグイン開発リソース
-
-プラグイン開発については、以下を参照してください:
-
-### 公式リソース
+#### 公式プラグインリソース
 * **[プラグインAPIドキュメント](https://github.com/siyuan-note/petal)** - 公式プラグインAPI
 * **[プラグインサンプル](https://github.com/siyuan-note/plugin-sample)** - 基本的なプラグインテンプレート
 * **[Vite & Svelteプラグインサンプル](https://github.com/siyuan-note/plugin-sample-vite-svelte)** - モダンなプラグインテンプレート
 * **[コミュニティマーケットプレイス](https://github.com/siyuan-note/bazaar)** - プラグイン配布
 
-### 包括的ガイド
-* **[高度なプラグインパターン](ADVANCED_PLUGIN_PATTERNS_ja_JP.md)** - 複雑なプラグイン向けの高度なパターンとアーキテクチャ
-* **[プラグインベストプラクティス](PLUGIN_BEST_PRACTICES_ja_JP.md)** - ベストプラクティスと開発ガイドライン
-* **[プラグインショーケース](PLUGIN_SHOWCASE_ja_JP.md)** - コミュニティプラグインの事例とショーケース
+### 4. 🎨 SiYuanテーマ
+テーマ・UI開発情報：
+- **[SiYuan DOM構造・CSS解説ガイド](SIYUAN_DOM_CSS_GUIDE_ja_JP.md)** - 完全なUI開発ガイド
 
 ## SiYuanメインリポジトリ
 

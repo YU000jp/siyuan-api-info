@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-<a href="README.md">English</a> | <a href="README_zh_CN.md">中文</a> | <a href="README_ja_JP.md">日本語</a>
+<a href="README.md">English</a> | <a href="README_ja_JP.md">日本語</a>
 </p>
 
 ---
@@ -21,44 +21,42 @@ This repository is specifically designed for **SiYuan plugin developers** who ne
 
 **For general SiYuan usage, installation, and documentation, please visit the main repository: [siyuan-note/siyuan](https://github.com/siyuan-note/siyuan)**
 
-## 📚 Repository Index
+## 📚 Documentation Categories
 
-**For developers and AI systems**: See [INDEX.md](./INDEX.md) for a comprehensive overview of the repository structure, API endpoints, and development information.
+This repository is organized into four main areas as requested:
 
-## API Documentation
+### 1. 🚀 SiYuan Application
+For general SiYuan usage, installation, and documentation:
+- **[Main SiYuan Repository](https://github.com/siyuan-note/siyuan)** - Complete application documentation
+- **[INDEX.md](./INDEX.md)** - Repository structure and overview
 
-### By Use Case (Recommended)
+### 2. 🔧 SiYuan API
+API documentation for developers and integrators:
+- **[Beginner's API Guide](API_BEGINNERS.md)** - Getting started with SiYuan API
+- **[Advanced API Patterns](API_ADVANCED_PATTERNS.md)** - Complex operations and best practices
+- **[Complete API Reference (English)](API.md)** - All API endpoints
+- **[Complete API Reference (日本語)](API_ja_JP.md)** - Japanese version
+- **[API Reference by Category (日本語)](API_REFERENCE_BY_CATEGORY_ja_JP.md)** - Organized by functionality
+- **[Missing Endpoints Supplement (日本語)](API_MISSING_ENDPOINTS_ja_JP.md)** - Additional endpoints
 
-* **[Beginner's API Guide (日本語)](API_BEGINNERS_ja_JP.md)** - Getting started with SiYuan API  
-* **[Plugin Developer's API Guide (日本語)](API_PLUGIN_DEVELOPERS_ja_JP.md)** - APIs specifically for plugin development
-* **[Advanced API Patterns (日本語)](API_ADVANCED_PATTERNS_ja_JP.md)** - Complex operations and best practices
-* **[API Reference by Category (日本語)](API_REFERENCE_BY_CATEGORY_ja_JP.md)** - APIs organized by functionality
-* **[Missing Endpoints Supplement (日本語)](API_MISSING_ENDPOINTS_ja_JP.md)** - Additional API endpoints
+### 3. 🔌 SiYuan Plugins
+Plugin development resources and guides:
+- **[Plugin Developer's API Guide](API_PLUGIN_DEVELOPERS.md)** - Complete plugin development guide
+- **[Plugin Developer's API Guide (日本語)](API_PLUGIN_DEVELOPERS_ja_JP.md)** - Japanese version
+- **[Plugin Best Practices](PLUGIN_BEST_PRACTICES.md)** - Development guidelines overview
+- **[Plugin Best Practices (日本語)](PLUGIN_BEST_PRACTICES_ja_JP.md)** - Complete development guidelines
+- **[Plugin Showcase](PLUGIN_SHOWCASE.md)** - Community plugin examples overview  
+- **[Plugin Showcase (日本語)](PLUGIN_SHOWCASE_ja_JP.md)** - Complete community plugin examples
 
-## UI & Theme Development
-
-* **[SiYuan DOM Structure & CSS Guide (日本語)](SIYUAN_DOM_CSS_GUIDE_ja_JP.md)** - Complete UI development guide for plugin & theme creators
-
-### Complete API Reference
-
-* [API Documentation (English)](API.md) - Complete endpoint reference
-* [API Documentation (中文)](API_zh_CN.md) - Chinese version
-* [API Documentation (日本語)](API_ja_JP.md) - Japanese version
-
-## Plugin Development Resources
-
-For plugin development, please refer to:
-
-### Official Resources
+#### Official Plugin Resources
 * **[Plugin API Documentation](https://github.com/siyuan-note/petal)** - Official Plugin API
 * **[Plugin Sample](https://github.com/siyuan-note/plugin-sample)** - Basic plugin template
 * **[Plugin Sample with Vite & Svelte](https://github.com/siyuan-note/plugin-sample-vite-svelte)** - Modern plugin template
 * **[Community Marketplace](https://github.com/siyuan-note/bazaar)** - Plugin distribution
 
-### Comprehensive Guides
-* **[Advanced Plugin Patterns (日本語)](ADVANCED_PLUGIN_PATTERNS_ja_JP.md)** - Advanced patterns and architectures for complex plugins
-* **[Plugin Best Practices (日本語)](PLUGIN_BEST_PRACTICES_ja_JP.md)** - Best practices and development guidelines
-* **[Plugin Showcase (日本語)](PLUGIN_SHOWCASE_ja_JP.md)** - Examples and showcase of community plugins
+### 4. 🎨 SiYuan Themes
+Theme and UI development information:
+- **[SiYuan DOM Structure & CSS Guide (日本語)](SIYUAN_DOM_CSS_GUIDE_ja_JP.md)** - Complete UI development guide
 
 ## SiYuan Main Repository
 

@@ -1419,7 +1419,6 @@ window.siyuan.zIndex: 10
 ### 開発ガイド
 - **[プラグイン開発者向けAPIガイド](API_PLUGIN_DEVELOPERS_ja_JP.md)** - 完全なプラグイン開発ガイド
 - **[プラグイン開発ベストプラクティス](PLUGIN_BEST_PRACTICES_ja_JP.md)** - 開発手法とコード品質
-- **[高度なプラグインパターン](ADVANCED_PLUGIN_PATTERNS_ja_JP.md)** - 実践的なパターン集
 
 ### APIリファレンス
 - **[完全なAPIリファレンス](API_ja_JP.md)** - 全エンドポイントの詳細

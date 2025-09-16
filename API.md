@@ -3,7 +3,6 @@
 A comprehensive guide to the SiYuan Note-Taking Application API. This API allows you to programmatically interact with SiYuan to manage notebooks, documents, blocks, and perform various operations.
 
 **Language Options:**
-- [中文 (Chinese)](https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md)
 - [日本語 (Japanese)](API_ja_JP.md)
 
 ---
