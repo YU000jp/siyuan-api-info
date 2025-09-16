@@ -19,7 +19,6 @@ SiYuanノートアプリケーションAPIの包括的ガイドです。このAP
 ## 📖 関連ドキュメント
 
 * **[プラグイン開発ベストプラクティス](PLUGIN_BEST_PRACTICES_ja_JP.md)** - 高品質なプラグイン開発のガイドライン
-* **[高度なプラグインパターン](ADVANCED_PLUGIN_PATTERNS_ja_JP.md)** - 実践的なプラグイン開発パターン
 * **[プラグインショーケース](PLUGIN_SHOWCASE_ja_JP.md)** - 優秀なプラグインの実例
 
 ---

@@ -753,7 +753,6 @@ async function getWorkspaceStats() {
 ### ベストプラクティス
 
 - **[プラグイン開発ベストプラクティス](PLUGIN_BEST_PRACTICES_ja_JP.md)** - 品質の高いプラグイン開発
-- **[高度なプラグインパターン](ADVANCED_PLUGIN_PATTERNS_ja_JP.md)** - 実践的なパターン集
 
 ### コミュニティ
 

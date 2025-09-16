@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-<a href="README.md">English</a> | <a href="README_zh_CN.md">中文</a> | <a href="README_ja_JP.md">日本語</a>
+<a href="README.md">English</a> | <a href="README_ja_JP.md">日本語</a>
 </p>
 
 ---
@@ -43,7 +43,6 @@
 
 * [APIドキュメント (日本語)](API_ja_JP.md) - 全エンドポイントの詳細
 * [APIドキュメント (English)](API.md)
-* [APIドキュメント (中文)](API_zh_CN.md)
 
 ## プラグイン開発リソース
 
@@ -56,7 +55,6 @@
 * **[コミュニティマーケットプレイス](https://github.com/siyuan-note/bazaar)** - プラグイン配布
 
 ### 包括的ガイド
-* **[高度なプラグインパターン](ADVANCED_PLUGIN_PATTERNS_ja_JP.md)** - 複雑なプラグイン向けの高度なパターンとアーキテクチャ
 * **[プラグインベストプラクティス](PLUGIN_BEST_PRACTICES_ja_JP.md)** - ベストプラクティスと開発ガイドライン
 * **[プラグインショーケース](PLUGIN_SHOWCASE_ja_JP.md)** - コミュニティプラグインの事例とショーケース
 
