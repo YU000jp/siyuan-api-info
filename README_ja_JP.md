@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-<a href="README.md">English</a> | <a href="README_zh_CN.md">中文</a>
+<a href="README.md">English</a> | <a href="README_zh_CN.md">中文</a> | <a href="README_ja_JP.md">日本語</a>
 </p>
 
 ---
@@ -20,6 +20,10 @@
 このリポジトリは、API情報と開発リソースにアクセスする必要がある**SiYuanプラグイン開発者**のために特別に設計されています。
 
 **一般的なSiYuanの使用方法、インストール、ドキュメントについては、メインリポジトリをご覧ください: [siyuan-note/siyuan](https://github.com/siyuan-note/siyuan)**
+
+## 📚 リポジトリインデックス
+
+**開発者・AIシステム向け**: リポジトリの構造、APIエンドポイント、開発情報の包括的な概要については、[INDEX.md](./INDEX.md)を参照してください。
 
 ## APIドキュメント
 
@@ -45,10 +49,16 @@
 
 プラグイン開発については、以下を参照してください:
 
+### 公式リソース
 * **[プラグインAPIドキュメント](https://github.com/siyuan-note/petal)** - 公式プラグインAPI
 * **[プラグインサンプル](https://github.com/siyuan-note/plugin-sample)** - 基本的なプラグインテンプレート
 * **[Vite & Svelteプラグインサンプル](https://github.com/siyuan-note/plugin-sample-vite-svelte)** - モダンなプラグインテンプレート
 * **[コミュニティマーケットプレイス](https://github.com/siyuan-note/bazaar)** - プラグイン配布
+
+### 包括的ガイド
+* **[高度なプラグインパターン](ADVANCED_PLUGIN_PATTERNS_ja_JP.md)** - 複雑なプラグイン向けの高度なパターンとアーキテクチャ
+* **[プラグインベストプラクティス](PLUGIN_BEST_PRACTICES_ja_JP.md)** - ベストプラクティスと開発ガイドライン
+* **[プラグインショーケース](PLUGIN_SHOWCASE_ja_JP.md)** - コミュニティプラグインの事例とショーケース
 
 ## SiYuanメインリポジトリ
 
