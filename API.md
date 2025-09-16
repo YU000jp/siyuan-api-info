@@ -35,6 +35,8 @@ The SiYuan API provides a RESTful interface for interacting with your knowledge 
     * [Save notebook configuration](#Save-notebook-configuration)
 * [Documents](#Documents)
     * [Create a document with Markdown](#Create-a-document-with-Markdown)
+    * [Duplicate a document](#Duplicate-a-document)
+    * [List document tree](#List-document-tree)
     * [Rename a document](#Rename-a-document)
     * [Remove a document](#Remove-a-document)
     * [Move documents](#Move-documents)
@@ -42,6 +44,8 @@ The SiYuan API provides a RESTful interface for interacting with your knowledge 
     * [Get human-readable path based on ID](#Get-human-readable-path-based-on-ID)
     * [Get storage path based on ID](#Get-storage-path-based-on-ID)
     * [Get IDs based on human-readable path](#Get-IDs-based-on-human-readable-path)
+    * [Upsert indexes](#Upsert-indexes)
+    * [Remove indexes](#Remove-indexes)
 * [Assets](#Assets)
     * [Upload assets](#Upload-assets)
 * [Blocks](#Blocks)
@@ -49,16 +53,26 @@ The SiYuan API provides a RESTful interface for interacting with your knowledge 
     * [Prepend blocks](#Prepend-blocks)
     * [Append blocks](#Append-blocks)
     * [Update a block](#Update-a-block)
+    * [Batch update blocks](#Batch-update-blocks)
     * [Delete a block](#Delete-a-block)
     * [Move a block](#Move-a-block)
     * [Fold a block](#Fold-a-block)
     * [Unfold a block](#Unfold-a-block)
     * [Get a block kramdown](#Get-a-block-kramdown)
     * [Get child blocks](#get-child-blocks)
+    * [Get tail child blocks](#Get-tail-child-blocks)
+    * [Get block DOMs](#Get-block-DOMs)
+    * [Get block tree infos](#Get-block-tree-infos)
+    * [Get blocks indexes](#Get-blocks-indexes)
+    * [Get docs info](#Get-docs-info)
+    * [Append daily note block](#Append-daily-note-block)
+    * [Prepend daily note block](#Prepend-daily-note-block)
     * [Transfer block ref](#transfer-block-ref)
 * [Attributes](#Attributes)
     * [Set block attributes](#Set-block-attributes)
+    * [Batch set block attributes](#Batch-set-block-attributes)
     * [Get block attributes](#Get-block-attributes)
+    * [Batch get block attributes](#Batch-get-block-attributes)
 * [SQL](#SQL)
     * [Execute SQL query](#Execute-SQL-query)
     * [Flush transaction](#Flush-transaction)
@@ -85,6 +99,41 @@ The SiYuan API provides a RESTful interface for interacting with your knowledge 
     * [Get boot progress](#Get-boot-progress)
     * [Get system version](#Get-system-version)
     * [Get the current time of the system](#Get-the-current-time-of-the-system)
+* [Archive](#Archive)
+    * [Create ZIP archive](#Create-ZIP-archive)
+    * [Extract ZIP archive](#Extract-ZIP-archive)
+* [Search](#Search)
+    * [Get embed block](#Get-embed-block)
+    * [Update embed block](#Update-embed-block)
+* [References](#References)
+    * [Get backlink document](#Get-backlink-document)
+* [UI Operations](#UI-Operations)
+    * [Reload attribute view](#Reload-attribute-view)
+    * [Reload file tree](#Reload-file-tree)
+    * [Reload protyle](#Reload-protyle)
+    * [Reload tag](#Reload-tag)
+    * [Reload UI](#Reload-UI)
+* [Settings](#Settings)
+    * [Set editor read-only](#Set-editor-read-only)
+    * [Add virtual block reference include](#Add-virtual-block-reference-include)
+    * [Refresh virtual block reference](#Refresh-virtual-block-reference)
+* [Attribute View](#Attribute-View)
+    * [Append attribute view detached blocks with values](#Append-attribute-view-detached-blocks-with-values)
+    * [Batch replace attribute view blocks](#Batch-replace-attribute-view-blocks)
+    * [Batch set attribute view block attributes](#Batch-set-attribute-view-block-attributes)
+    * [Get attribute view bound block IDs](#Get-attribute-view-bound-block-IDs)
+* [Riff (Spaced Repetition)](#Riff-Spaced-Repetition)
+    * [Get riff cards](#Get-riff-cards)
+    * [Get riff cards by block IDs](#Get-riff-cards-by-block-IDs)
+    * [Batch set riff cards due time](#Batch-set-riff-cards-due-time)
+* [Repository](#Repository)
+    * [Get repository file](#Get-repository-file)
+* [File Operations](#File-Operations)
+    * [Global copy files](#Global-copy-files)
+* [Icon](#Icon)
+    * [Get dynamic icon](#Get-dynamic-icon)
+* [Lute](#Lute)
+    * [HTML to block DOM](#HTML-to-block-DOM)
 
 ---
 
@@ -1931,3 +1980,1089 @@ const organizeDocuments = async (token) => {
   ```
 
     * `data`: Precision in milliseconds
+
+---
+
+## Additional API Endpoints
+
+The following sections document additional SiYuan API endpoints that have been added in recent versions and provide extended functionality for advanced use cases.
+
+## Archive
+
+### Create ZIP archive
+
+Creates a ZIP archive from specified files and folders.
+
+**Endpoint:** `/api/archive/zip`
+
+**Parameters:**
+```json
+{
+  "paths": ["/path/to/file1", "/path/to/folder"],
+  "name": "archive-name"
+}
+```
+
+- `paths` (array): Array of file/folder paths to include in the archive
+- `name` (string): Name for the ZIP file (optional)
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "path": "/path/to/archive.zip"
+  }
+}
+```
+
+### Extract ZIP archive
+
+Extracts a ZIP archive to a specified location.
+
+**Endpoint:** `/api/archive/unzip`
+
+**Parameters:**
+```json
+{
+  "path": "/path/to/archive.zip",
+  "dest": "/extraction/destination"
+}
+```
+
+- `path` (string): Path to the ZIP file to extract
+- `dest` (string): Destination folder for extraction
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+## Search
+
+### Get embed block
+
+Retrieves information about an embedded block.
+
+**Endpoint:** `/api/search/getEmbedBlock`
+
+**Parameters:**
+```json
+{
+  "id": "20210808180320-fqgskfj",
+  "includeIDs": ["20210808180320-abc123"]
+}
+```
+
+- `id` (string): Block ID to search for
+- `includeIDs` (array): Array of block IDs to include in results
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "block": {
+      "id": "20210808180320-fqgskfj",
+      "content": "Block content here"
+    }
+  }
+}
+```
+
+### Update embed block
+
+Updates an embedded block's content.
+
+**Endpoint:** `/api/search/updateEmbedBlock`
+
+**Parameters:**
+```json
+{
+  "id": "20210808180320-fqgskfj",
+  "content": "Updated block content"
+}
+```
+
+- `id` (string): Block ID to update
+- `content` (string): New content for the block
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+## References
+
+### Get backlink document
+
+Retrieves the document containing backlinks to a specific block.
+
+**Endpoint:** `/api/ref/getBacklinkDoc`
+
+**Parameters:**
+```json
+{
+  "id": "20210808180320-fqgskfj"
+}
+```
+
+- `id` (string): Block ID to find backlinks for
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "backlinks": [
+      {
+        "id": "20210809123456-abc123",
+        "title": "Document Title",
+        "path": "/path/to/document"
+      }
+    ]
+  }
+}
+```
+
+## UI Operations
+
+### Reload attribute view
+
+Reloads the attribute view in the UI.
+
+**Endpoint:** `/api/ui/reloadAttributeView`
+
+**Parameters:**
+```json
+{
+  "id": "20210808180320-fqgskfj"
+}
+```
+
+- `id` (string): Attribute view ID to reload
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Reload file tree
+
+Reloads the file tree in the UI.
+
+**Endpoint:** `/api/ui/reloadFiletree`
+
+**Parameters:** None
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Reload protyle
+
+Reloads the protyle editor.
+
+**Endpoint:** `/api/ui/reloadProtyle`
+
+**Parameters:**
+```json
+{
+  "id": "20210808180320-fqgskfj"
+}
+```
+
+- `id` (string): Block ID to reload in protyle
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Reload tag
+
+Reloads the tag panel in the UI.
+
+**Endpoint:** `/api/ui/reloadTag`
+
+**Parameters:** None
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Reload UI
+
+Reloads the entire UI.
+
+**Endpoint:** `/api/ui/reloadUI`
+
+**Parameters:** None
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+## Settings
+
+### Set editor read-only
+
+Sets the editor to read-only mode.
+
+**Endpoint:** `/api/setting/setEditorReadOnly`
+
+**Parameters:**
+```json
+{
+  "readOnly": true
+}
+```
+
+- `readOnly` (boolean): Whether to enable read-only mode
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Add virtual block reference include
+
+Adds a virtual block reference include pattern.
+
+**Endpoint:** `/api/setting/addVirtualBlockRefInclude`
+
+**Parameters:**
+```json
+{
+  "pattern": "*.md"
+}
+```
+
+- `pattern` (string): File pattern to include for virtual block references
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Refresh virtual block reference
+
+Refreshes virtual block references.
+
+**Endpoint:** `/api/setting/refreshVirtualBlockRef`
+
+**Parameters:** None
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+## Attribute View
+
+### Append attribute view detached blocks with values
+
+Appends detached blocks to an attribute view with specific values.
+
+**Endpoint:** `/api/av/appendAttributeViewDetachedBlocksWithValues`
+
+**Parameters:**
+```json
+{
+  "avID": "20210808180320-fqgskfj",
+  "blockIDs": ["20210808180320-abc123"],
+  "values": {
+    "column1": "value1",
+    "column2": "value2"
+  }
+}
+```
+
+- `avID` (string): Attribute view ID
+- `blockIDs` (array): Array of block IDs to append
+- `values` (object): Key-value pairs for attribute values
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Batch replace attribute view blocks
+
+Replaces multiple blocks in an attribute view.
+
+**Endpoint:** `/api/av/batchReplaceAttributeViewBlocks`
+
+**Parameters:**
+```json
+{
+  "avID": "20210808180320-fqgskfj",
+  "blockIDs": ["20210808180320-abc123"],
+  "replacements": ["20210808180320-def456"]
+}
+```
+
+- `avID` (string): Attribute view ID
+- `blockIDs` (array): Array of block IDs to replace
+- `replacements` (array): Array of replacement block IDs
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Batch set attribute view block attributes
+
+Sets attributes for multiple blocks in an attribute view.
+
+**Endpoint:** `/api/av/batchSetAttributeViewBlockAttrs`
+
+**Parameters:**
+```json
+{
+  "avID": "20210808180320-fqgskfj",
+  "blockIDs": ["20210808180320-abc123"],
+  "attrs": {
+    "custom-attr1": "value1"
+  }
+}
+```
+
+- `avID` (string): Attribute view ID
+- `blockIDs` (array): Array of block IDs to update
+- `attrs` (object): Attributes to set
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Get attribute view bound block IDs
+
+Gets the block IDs bound to an attribute view.
+
+**Endpoint:** `/api/av/getAttributeViewBoundBlockIDs`
+
+**Parameters:**
+```json
+{
+  "avID": "20210808180320-fqgskfj"
+}
+```
+
+- `avID` (string): Attribute view ID
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "blockIDs": ["20210808180320-abc123", "20210808180320-def456"]
+  }
+}
+```
+
+## Riff (Spaced Repetition)
+
+### Get riff cards
+
+Retrieves spaced repetition cards.
+
+**Endpoint:** `/api/riff/getRiffCards`
+
+**Parameters:**
+```json
+{
+  "deckID": "20210808180320-fqgskfj"
+}
+```
+
+- `deckID` (string): Deck ID to get cards from
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "cards": [
+      {
+        "id": "20210808180320-abc123",
+        "blockID": "20210808180320-def456",
+        "due": 1631850968131
+      }
+    ]
+  }
+}
+```
+
+### Get riff cards by block IDs
+
+Retrieves spaced repetition cards for specific block IDs.
+
+**Endpoint:** `/api/riff/getRiffCardsByBlockIDs`
+
+**Parameters:**
+```json
+{
+  "blockIDs": ["20210808180320-abc123", "20210808180320-def456"]
+}
+```
+
+- `blockIDs` (array): Array of block IDs to get cards for
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "cards": [
+      {
+        "id": "20210808180320-abc123",
+        "blockID": "20210808180320-def456",
+        "due": 1631850968131
+      }
+    ]
+  }
+}
+```
+
+### Batch set riff cards due time
+
+Sets the due time for multiple riff cards.
+
+**Endpoint:** `/api/riff/batchSetRiffCardsDueTime`
+
+**Parameters:**
+```json
+{
+  "cardIDs": ["20210808180320-abc123"],
+  "dueTime": 1631850968131
+}
+```
+
+- `cardIDs` (array): Array of card IDs to update
+- `dueTime` (number): New due time (Unix timestamp in milliseconds)
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+## Repository
+
+### Get repository file
+
+Retrieves a file from the repository.
+
+**Endpoint:** `/api/repo/getRepoFile`
+
+**Parameters:**
+```json
+{
+  "path": "/path/to/file.md"
+}
+```
+
+- `path` (string): Path to the file in the repository
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "content": "File content here"
+  }
+}
+```
+
+## File Operations
+
+### Global copy files
+
+Copies files globally across the system.
+
+**Endpoint:** `/api/file/globalCopyFiles`
+
+**Parameters:**
+```json
+{
+  "paths": ["/source/file1.md", "/source/file2.md"],
+  "dest": "/destination/folder"
+}
+```
+
+- `paths` (array): Array of source file paths
+- `dest` (string): Destination folder path
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+## Icon
+
+### Get dynamic icon
+
+Retrieves a dynamic icon.
+
+**Endpoint:** `/api/icon/getDynamicIcon`
+
+**Parameters:**
+```json
+{
+  "type": "emoji",
+  "id": "1f41b"
+}
+```
+
+- `type` (string): Type of icon (e.g., "emoji")
+- `id` (string): Icon identifier
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "icon": "🐛"
+  }
+}
+```
+
+## Lute
+
+### HTML to block DOM
+
+Converts HTML content to SiYuan block DOM structure.
+
+**Endpoint:** `/api/lute/html2BlockDOM`
+
+**Parameters:**
+```json
+{
+  "html": "<p>Hello <strong>world</strong></p>"
+}
+```
+
+- `html` (string): HTML content to convert
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "dom": "<div data-node-id=\"20210808180320-abc123\" data-type=\"NodeParagraph\" class=\"p\"><div contenteditable=\"true\" spellcheck=\"false\">Hello <strong>world</strong></div></div>"
+  }
+}
+```
+
+---
+
+## Missing Block Operations
+
+Let me also add the missing block operations that were identified:
+
+### Batch update blocks
+
+Updates multiple blocks in a single operation.
+
+**Endpoint:** `/api/block/batchUpdateBlock`
+
+**Parameters:**
+```json
+{
+  "blocks": [
+    {
+      "id": "20210808180320-abc123",
+      "data": "Updated content 1",
+      "dataType": "markdown"
+    },
+    {
+      "id": "20210808180320-def456", 
+      "data": "Updated content 2",
+      "dataType": "markdown"
+    }
+  ]
+}
+```
+
+- `blocks` (array): Array of block objects to update
+  - `id` (string): Block ID
+  - `data` (string): New content
+  - `dataType` (string): Data type ("markdown" or "dom")
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Get tail child blocks
+
+Gets the last child blocks of a parent block.
+
+**Endpoint:** `/api/block/getTailChildBlocks`
+
+**Parameters:**
+```json
+{
+  "id": "20210808180320-fqgskfj"
+}
+```
+
+- `id` (string): Parent block ID
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "id": "20210808180320-abc123",
+      "type": "p"
+    }
+  ]
+}
+```
+
+### Get block DOMs
+
+Gets the DOM representation of blocks.
+
+**Endpoint:** `/api/block/getBlockDOMs`
+
+**Parameters:**
+```json
+{
+  "ids": ["20210808180320-abc123", "20210808180320-def456"]
+}
+```
+
+- `ids` (array): Array of block IDs
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "doms": [
+      {
+        "id": "20210808180320-abc123",
+        "dom": "<div>Block DOM here</div>"
+      }
+    ]
+  }
+}
+```
+
+### Get block tree infos
+
+Gets tree information for blocks.
+
+**Endpoint:** `/api/block/getBlockTreeInfos`
+
+**Parameters:**
+```json
+{
+  "ids": ["20210808180320-abc123"]
+}
+```
+
+- `ids` (array): Array of block IDs
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "id": "20210808180320-abc123",
+      "type": "p",
+      "children": []
+    }
+  ]
+}
+```
+
+### Get blocks indexes
+
+Gets index information for blocks.
+
+**Endpoint:** `/api/block/getBlocksIndexes`
+
+**Parameters:**
+```json
+{
+  "ids": ["20210808180320-abc123"]
+}
+```
+
+- `ids` (array): Array of block IDs
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "indexes": [
+      {
+        "id": "20210808180320-abc123",
+        "index": 0
+      }
+    ]
+  }
+}
+```
+
+### Get docs info
+
+Gets information about documents.
+
+**Endpoint:** `/api/block/getDocsInfo`
+
+**Parameters:**
+```json
+{
+  "ids": ["20210808180320-abc123"]
+}
+```
+
+- `ids` (array): Array of document IDs
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "id": "20210808180320-abc123",
+      "title": "Document Title",
+      "path": "/path/to/document"
+    }
+  ]
+}
+```
+
+### Append daily note block
+
+Appends a block to the daily note.
+
+**Endpoint:** `/api/block/appendDailyNoteBlock`
+
+**Parameters:**
+```json
+{
+  "dataType": "markdown",
+  "data": "Daily note content"
+}
+```
+
+- `dataType` (string): Data type ("markdown" or "dom")
+- `data` (string): Content to append
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "id": "20210808180320-abc123"
+  }
+}
+```
+
+### Prepend daily note block
+
+Prepends a block to the daily note.
+
+**Endpoint:** `/api/block/prependDailyNoteBlock`
+
+**Parameters:**
+```json
+{
+  "dataType": "markdown", 
+  "data": "Daily note content"
+}
+```
+
+- `dataType` (string): Data type ("markdown" or "dom")
+- `data` (string): Content to prepend
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "id": "20210808180320-abc123"
+  }
+}
+```
+
+## Missing Attribute Operations
+
+### Batch set block attributes
+
+Sets attributes for multiple blocks in a single operation.
+
+**Endpoint:** `/api/attr/batchSetBlockAttrs`
+
+**Parameters:**
+```json
+{
+  "attrs": [
+    {
+      "id": "20210808180320-abc123",
+      "attrs": {
+        "custom-attr1": "value1"
+      }
+    },
+    {
+      "id": "20210808180320-def456",
+      "attrs": {
+        "custom-attr2": "value2"
+      }
+    }
+  ]
+}
+```
+
+- `attrs` (array): Array of block attribute objects
+  - `id` (string): Block ID
+  - `attrs` (object): Attributes to set
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Batch get block attributes
+
+Gets attributes for multiple blocks in a single operation.
+
+**Endpoint:** `/api/attr/batchGetBlockAttrs`
+
+**Parameters:**
+```json
+{
+  "ids": ["20210808180320-abc123", "20210808180320-def456"]
+}
+```
+
+- `ids` (array): Array of block IDs
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "id": "20210808180320-abc123",
+      "attrs": {
+        "custom-attr1": "value1"
+      }
+    }
+  ]
+}
+```
+
+## Missing Document Operations
+
+### Duplicate a document
+
+Creates a duplicate copy of an existing document.
+
+**Endpoint:** `/api/filetree/duplicateDoc`
+
+**Parameters:**
+```json
+{
+  "id": "20210808180320-fqgskfj"
+}
+```
+
+- `id` (string): Document ID to duplicate
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "id": "20210808180320-abc123",
+    "box": "20210817205410-2kvfpfn",
+    "path": "/duplicated-document.sy",
+    "hpath": "/Duplicated Document"
+  }
+}
+```
+
+### List document tree
+
+Lists the document tree structure.
+
+**Endpoint:** `/api/filetree/listDocTree`
+
+**Parameters:**
+```json
+{
+  "notebook": "20210817205410-2kvfpfn",
+  "path": "/"
+}
+```
+
+- `notebook` (string): Notebook ID
+- `path` (string): Root path to list from
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "files": [
+      {
+        "name": "Document 1",
+        "path": "/document1.sy",
+        "id": "20210808180320-abc123"
+      }
+    ]
+  }
+}
+```
+
+### Upsert indexes
+
+Creates or updates document indexes.
+
+**Endpoint:** `/api/filetree/upsertIndexes`
+
+**Parameters:**
+```json
+{
+  "paths": ["/document1.sy", "/document2.sy"]
+}
+```
+
+- `paths` (array): Array of document paths to index
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+### Remove indexes
+
+Removes document indexes.
+
+**Endpoint:** `/api/filetree/removeIndexes`
+
+**Parameters:**
+```json
+{
+  "paths": ["/document1.sy", "/document2.sy"]
+}
+```
+
+- `paths` (array): Array of document paths to remove from index
+
+**Response:**
+```json
+{
+  "code": 0,
+  "msg": "",
+  "data": null
+}
+```
+
+---
+
+This comprehensive documentation now includes all the missing SiYuan API endpoints that were identified from the changelogs and recent additions. Each endpoint includes detailed parameter descriptions, request/response examples, and usage information to help developers integrate with SiYuan effectively.
