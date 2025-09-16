@@ -1,0 +1,110 @@
+{
+  "ai_manifest_version": "1.0",
+  "repository": {
+    "name": "siyuan-api-info",
+    "description": "SiYuan API Documentation and Plugin Development Resources",
+    "purpose": "AI-friendly documentation repository for SiYuan knowledge management system",
+    "ai_readiness": "optimized",
+    "last_updated": "2024-09-16"
+  },
+  "ai_entry_points": [
+    {
+      "file": "AI_CONTEXT.md",
+      "purpose": "Primary AI context and usage guidelines",
+      "priority": "highest",
+      "size_kb": 5.2
+    },
+    {
+      "file": "repository-metadata.json", 
+      "purpose": "Structured repository metadata",
+      "priority": "highest",
+      "size_kb": 4.7
+    },
+    {
+      "file": "SITEMAP.md",
+      "purpose": "Repository structure and navigation",
+      "priority": "high",
+      "size_kb": 5.3
+    },
+    {
+      "file": ".ai-instructions.md",
+      "purpose": "AI assistant specific instructions",
+      "priority": "high", 
+      "size_kb": 3.7
+    }
+  ],
+  "primary_content": [
+    {
+      "file": "API_ja_JP.md",
+      "description": "Most comprehensive API documentation (Japanese)",
+      "priority": "critical",
+      "size_kb": 87,
+      "content_type": "api_reference",
+      "language": "japanese"
+    },
+    {
+      "file": "API_PLUGIN_DEVELOPERS_ja_JP.md",
+      "description": "Complete plugin development guide (Japanese)",
+      "priority": "critical", 
+      "size_kb": 94,
+      "content_type": "plugin_development",
+      "language": "japanese"
+    },
+    {
+      "file": "API.md",
+      "description": "Complete API documentation (English)",
+      "priority": "high",
+      "size_kb": 60,
+      "content_type": "api_reference", 
+      "language": "english"
+    },
+    {
+      "file": "PLUGIN_BEST_PRACTICES_ja_JP.md",
+      "description": "Development best practices (Japanese)",
+      "priority": "high",
+      "size_kb": 40,
+      "content_type": "best_practices",
+      "language": "japanese"
+    }
+  ],
+  "use_case_routing": {
+    "api_integration": ["API.md", "API_ja_JP.md", "API_BEGINNERS.md"],
+    "plugin_development": ["API_PLUGIN_DEVELOPERS_ja_JP.md", "PLUGIN_BEST_PRACTICES_ja_JP.md"],
+    "theme_development": ["SIYUAN_DOM_CSS_GUIDE_ja_JP.md"],
+    "code_examples": ["PLUGIN_SHOWCASE_ja_JP.md", "API_ADVANCED_PATTERNS.md"],
+    "beginner_help": ["API_BEGINNERS.md", "API_BEGINNERS_ja_JP.md"],
+    "navigation": ["INDEX.md", "SITEMAP.md"]
+  },
+  "technical_specs": {
+    "api_base_url": "http://localhost:6806/api/",
+    "authentication": "token_based",
+    "data_format": "json",
+    "primary_method": "POST",
+    "endpoint_count": 40,
+    "supported_languages": ["english", "japanese"],
+    "total_docs_size_kb": 650
+  },
+  "language_preference": {
+    "japanese_comprehensive": true,
+    "english_available": true,
+    "recommendation": "Use Japanese files for most comprehensive information"
+  },
+  "related_resources": {
+    "main_project": "https://github.com/siyuan-note/siyuan",
+    "plugin_api": "https://github.com/siyuan-note/petal",
+    "plugin_templates": [
+      "https://github.com/siyuan-note/plugin-sample",
+      "https://github.com/siyuan-note/plugin-sample-vite-svelte"
+    ],
+    "marketplace": "https://github.com/siyuan-note/bazaar"
+  },
+  "ai_optimization_features": [
+    "structured_metadata",
+    "language_detection",
+    "priority_routing",
+    "use_case_mapping",
+    "file_size_optimization",
+    "context_preservation",
+    "cross_reference_links"
+  ]
+}
