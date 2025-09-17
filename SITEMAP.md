@@ -9,8 +9,14 @@ siyuan-api-info/
 ├── 🤖 AI-Specific Files
 │   ├── AI_CONTEXT.md                    # AI context and usage guidelines
 │   ├── .ai-instructions.md              # AI assistant instructions
+│   ├── AI_QUICK_REFERENCE.md            # Quick reference for AI systems ⭐
 │   ├── repository-metadata.json         # Structured metadata
 │   └── SITEMAP.md                       # This file
+│
+├── 🔧 Development Resources
+│   ├── TECHNICAL_STACK.md               # Comprehensive tech stack analysis ⭐
+│   ├── DEVELOPMENT_PATTERNS.md          # Coding patterns and conventions ⭐
+│   └── DEVELOPMENT_WORKFLOW.md          # Workflow and issue patterns ⭐
 │
 ├── 📖 Documentation Overview
 │   ├── README.md                        # English introduction
@@ -65,21 +71,25 @@ siyuan-api-info/
 ## 🎯 Priority Files for AI Systems
 
 ### Highest Priority (⭐)
-1. **API_ja_JP.md** (87KB) - Most comprehensive API documentation
-2. **API_PLUGIN_DEVELOPERS_ja_JP.md** (94KB) - Complete plugin development guide
-3. **PLUGIN_BEST_PRACTICES_ja_JP.md** (40KB) - Development best practices
-4. **PLUGIN_SHOWCASE_ja_JP.md** (56KB) - Real-world examples
+1. **AI_QUICK_REFERENCE.md** - Immediate AI context and patterns
+2. **TECHNICAL_STACK.md** - Comprehensive technology analysis  
+3. **API_ja_JP.md** (87KB) - Most comprehensive API documentation
+4. **API_PLUGIN_DEVELOPERS_ja_JP.md** (94KB) - Complete plugin development guide
+5. **DEVELOPMENT_PATTERNS.md** - Coding conventions and patterns
+6. **PLUGIN_BEST_PRACTICES_ja_JP.md** (40KB) - Development best practices
+7. **PLUGIN_SHOWCASE_ja_JP.md** (56KB) - Real-world examples
 
 ### High Priority
-5. **API.md** (60KB) - English API reference
-6. **AI_CONTEXT.md** - AI-specific context and guidelines
-7. **INDEX.md** - Repository structure overview
-8. **repository-metadata.json** - Structured metadata
+8. **DEVELOPMENT_WORKFLOW.md** - Development processes and issue patterns
+9. **API.md** (60KB) - English API reference
+10. **AI_CONTEXT.md** - AI-specific context and guidelines
+11. **INDEX.md** - Repository structure overview
+12. **repository-metadata.json** - Structured metadata
 
 ### Medium Priority
-9. **API_ADVANCED_PATTERNS.md/ja_JP.md** - Complex usage patterns
-10. **SIYUAN_DOM_CSS_GUIDE_ja_JP.md** - UI development guide
-11. **API_BEGINNERS.md/ja_JP.md** - Entry-level guides
+13. **API_ADVANCED_PATTERNS.md/ja_JP.md** - Complex usage patterns
+14. **SIYUAN_DOM_CSS_GUIDE_ja_JP.md** - UI development guide
+15. **API_BEGINNERS.md/ja_JP.md** - Entry-level guides
 
 ## 🔍 Content Categories
 
