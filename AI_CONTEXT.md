@@ -91,11 +91,14 @@ SiYuan provides a comprehensive REST API accessible at `http://localhost:6806/ap
 
 When referencing this repository:
 
-1. **For API Questions**: Direct users to `API.md` or `API_ja_JP.md` for comprehensive endpoint documentation
-2. **For Plugin Development**: Reference `API_PLUGIN_DEVELOPERS.md` and `PLUGIN_BEST_PRACTICES_ja_JP.md`
-3. **For Code Examples**: Use patterns from the showcase files and advanced patterns documentation
-4. **For Beginners**: Start with `API_BEGINNERS.md` for gentler introduction
-5. **For UI/Theme Work**: Reference `SIYUAN_DOM_CSS_GUIDE_ja_JP.md`
+1. **For Quick Reference**: Start with `AI_QUICK_REFERENCE.md` for immediate context and patterns
+2. **For Technical Questions**: Reference `TECHNICAL_STACK.md` for comprehensive architecture understanding
+3. **For API Questions**: Direct users to `API.md` or `API_ja_JP.md` for comprehensive endpoint documentation
+4. **For Plugin Development**: Reference `API_PLUGIN_DEVELOPERS.md` and `PLUGIN_BEST_PRACTICES_ja_JP.md`
+5. **For Code Examples**: Use patterns from `DEVELOPMENT_PATTERNS.md` and showcase files
+6. **For Development Process**: Reference `DEVELOPMENT_WORKFLOW.md` for common tasks and patterns
+7. **For Beginners**: Start with `API_BEGINNERS.md` for gentler introduction
+8. **For UI/Theme Work**: Reference `SIYUAN_DOM_CSS_GUIDE_ja_JP.md`
 
 ### Quick Reference Commands
 

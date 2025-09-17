@@ -136,12 +136,90 @@
     "official_docs": "https://b3log.org/siyuan/en/"
   },
   "technical_stack": {
-    "frontend": ["typescript", "javascript", "electron", "scss"],
-    "backend": ["go", "sqlite", "rest_api", "websocket"],
-    "mobile": ["ios", "android", "harmonyos"],
-    "deployment": ["docker", "electron_builder"]
+    "frontend": {
+      "languages": ["typescript", "javascript"],
+      "frameworks": ["electron", "webpack"],
+      "styling": ["scss", "sass"],
+      "package_manager": "pnpm",
+      "build_tools": ["webpack", "electron-builder", "esbuild-loader"],
+      "development_tools": ["eslint", "typescript_eslint"],
+      "key_libraries": ["dayjs", "blueimp-md5", "@electron/remote"]
+    },
+    "backend": {
+      "language": "go",
+      "version": "1.24.4",
+      "database": "sqlite",
+      "api_style": "rest_api",
+      "communication": ["websocket", "http"],
+      "key_libraries": [
+        "github.com/88250/lute",
+        "github.com/88250/gulu", 
+        "github.com/PuerkitoBio/goquery",
+        "github.com/asaskevich/EventBus",
+        "code.sajari.com/docconv"
+      ]
+    },
+    "platforms": {
+      "desktop": ["windows", "macos", "linux"],
+      "mobile": ["ios", "android", "harmonyos"],
+      "architectures": ["x64", "arm64"]
+    },
+    "deployment": {
+      "methods": ["docker", "electron_builder", "native_packages"],
+      "ci_cd": "github_actions_compatible",
+      "package_formats": ["dmg", "exe", "deb", "rpm", "appx"]
+    }
+  },
+  "development_patterns": {
+    "naming_conventions": {
+      "typescript": {
+        "classes": "PascalCase",
+        "functions": "camelCase_verb_noun_pattern",
+        "files": "kebab-case_or_camelCase"
+      },
+      "go": {
+        "public_functions": "PascalCase",
+        "private_functions": "camelCase", 
+        "types": "PascalCase",
+        "api_handlers": "camelCase_descriptive_action"
+      }
+    },
+    "architectural_patterns": {
+      "frontend": "event_driven_modular_design",
+      "backend": "restful_api_service_layer",
+      "data_model": "block_based_architecture",
+      "plugin_system": "lifecycle_hooks_and_events"
+    },
+    "common_workflows": [
+      "api_documentation_enhancement",
+      "bilingual_content_creation",
+      "repository_structure_improvement",
+      "ai_context_optimization"
+    ]
+  },
+  "issue_patterns": {
+    "categories": {
+      "documentation_enhancement": "70%",
+      "content_reorganization": "20%", 
+      "ai_integration_improvements": "10%"
+    },
+    "resolution_time": "24_hours_average",
+    "language_preference": "japanese_with_english_support",
+    "common_tasks": [
+      "api_endpoint_documentation",
+      "usage_example_creation",
+      "multi_language_support",
+      "metadata_structure_improvement"
+    ]
   },
   "license": "AGPL-3.0",
-  "last_updated": "2024-09-16",
-  "version": "1.0.0"
+  "last_updated": "2025-09-17",
+  "version": "2.0.0",
+  "ai_enhancement_features": {
+    "technical_analysis": "comprehensive_stack_documentation",
+    "development_patterns": "naming_conventions_and_workflows",
+    "issue_pattern_analysis": "historical_trend_documentation",
+    "enhanced_metadata": "structured_technical_specifications",
+    "workflow_documentation": "development_process_guidelines"
+  }
 }

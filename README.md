@@ -21,6 +21,17 @@ This repository is specifically designed for **SiYuan plugin developers** who ne
 
 **For general SiYuan usage, installation, and documentation, please visit the main repository: [siyuan-note/siyuan](https://github.com/siyuan-note/siyuan)**
 
+## 🤖 AI & Developer Resources
+
+This repository includes comprehensive AI-optimized documentation:
+
+- **[AI_QUICK_REFERENCE.md](AI_QUICK_REFERENCE.md)** - Immediate context and patterns for AI systems
+- **[TECHNICAL_STACK.md](TECHNICAL_STACK.md)** - Complete technology stack analysis
+- **[DEVELOPMENT_PATTERNS.md](DEVELOPMENT_PATTERNS.md)** - Coding conventions and architectural patterns
+- **[DEVELOPMENT_WORKFLOW.md](DEVELOPMENT_WORKFLOW.md)** - Common development workflows and issue patterns
+- **[AI_CONTEXT.md](AI_CONTEXT.md)** - Comprehensive AI context and usage guidelines
+- **[SITEMAP.md](SITEMAP.md)** - Repository navigation optimized for AI systems
+
 ## 📚 Documentation Categories
 
 This repository is organized into four main areas as requested:
